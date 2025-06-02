@@ -8,8 +8,10 @@ import Header from "../components/Header";
 
 import dayjs from "dayjs";
 
-const TravelRegister = ({ addPost }) => {
+const TravelRegister = () => {
   const navigate = useNavigate();
+
+  const [error, setError] = useState(true); //eslint-disable-line no-unused-vars
 
   const [region, setRegion] = useState(""); // 지역 상태
   const [title, setTitle] = useState(""); // 제목 상태
@@ -23,24 +25,10 @@ const TravelRegister = ({ addPost }) => {
   const [contents, setContents] = useState(""); // 내용
 
   const handleSave = async () => {
-    console.log("저장 버튼이 클릭되었습니다.");
-
     if (!title || !contents) {
       alert("제목과 내용을 입력해주세요!");
       return;
     }
-
-    console.log("입력된 값:", {
-      title,
-      contents,
-      region,
-      season,
-      category,
-      costType,
-      vehicle,
-      travelStartDt,
-      travelEndDt,
-    });
 
     const travelStartDtFormatted = dayjs(travelStartDt).format("YYYY-MM-DD");
     const travelEndDtFormatted = dayjs(travelEndDt).format("YYYY-MM-DD");
@@ -58,7 +46,6 @@ const TravelRegister = ({ addPost }) => {
     };
 
     try {
-      console.log("백엔드로 데이터 전송 시작");
       const response = await fetch("http://localhost:8080/api/travel/create", {
         method: "POST",
         headers: {
@@ -71,10 +58,9 @@ const TravelRegister = ({ addPost }) => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      console.log("백엔드 응답 성공:", response);
       navigate("/travel");
-    } catch (error) {
-      console.error("여행 데이터 저장 실패:", error);
+    } catch {
+      // 오류 무시
     }
   };
 
