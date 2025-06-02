@@ -20,7 +20,6 @@ const TravelList = () => {
         throw new Error("데이터를 가져오는 데 실패했습니다.");
       }
       const data = await response.json();
-      console.log(data);
       setTravelList(data);
     } catch (err) {
       setError(err.message);

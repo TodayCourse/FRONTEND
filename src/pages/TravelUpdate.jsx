@@ -8,12 +8,12 @@ import Header from "../components/Header";
 
 import dayjs from "dayjs";
 
-const TravelUpdate = ({ updatePost }) => {
+const TravelUpdate = () => {
   const { travelId } = useParams(); // travelId를 URL에서 받아옵니다.
   const navigate = useNavigate();
 
-  const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [post, setPost] = useState(null); //eslint-disable-line no-unused-vars
+  const [loading, setLoading] = useState(true); //eslint-disable-line no-unused-vars
 
   // 상태 초기값 설정
   const [region, setRegion] = useState("");
@@ -24,7 +24,7 @@ const TravelUpdate = ({ updatePost }) => {
   const [travelEndDt, setTravelEndDt] = useState(null);
   const [category, setCategory] = useState("");
   const [season, setSeason] = useState("");
-  const [regUserId, setRegUserId] = useState("");
+  const [regUserId, setRegUserId] = useState(""); //eslint-disable-line no-unused-vars
   const [vehicle, setVehicle] = useState("");
 
   // 게시글이 변경될 때 상태 업데이트
@@ -60,8 +60,6 @@ const TravelUpdate = ({ updatePost }) => {
 
   // 저장 버튼 클릭 시 실행되는 함수
   const handleSave = async () => {
-    console.log("저장 버튼이 클릭되었습니다.");
-
     if (
       !title ||
       !contents ||
@@ -93,8 +91,6 @@ const TravelUpdate = ({ updatePost }) => {
       vehicle,
     };
 
-    console.log("보내는 데이터:", JSON.stringify(updatedPost));
-
     try {
       const response = await fetch(
         `http://localhost:8080/api/travel/${travelId}`,
@@ -111,12 +107,10 @@ const TravelUpdate = ({ updatePost }) => {
         throw new Error("네트워크 응답에 문제가 있습니다");
       }
 
-      const result = await response.json();
-      console.log("수정 성공:", result);
       navigate(`/travelinfo/${travelId}`);
       alert("수정되었습니다!");
     } catch (error) {
-      console.error("수정 오류:", error);
+      error("수정 오류:", error);
     }
   };
 

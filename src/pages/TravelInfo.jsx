@@ -118,7 +118,7 @@ const getSeasonText = (season) => {
   }
 };
 
-const TravelInfo = ({ courses, deletePost }) => {
+const TravelInfo = () => {
   const { travelId } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
@@ -198,10 +198,7 @@ const TravelInfo = ({ courses, deletePost }) => {
 
           <h2>{post.title}</h2>
           <div className="shareBtn">
-            <p
-              onClick={() => navigate(`/travelupdate/${post.travelId}`)}
-              style={{ cursor: "pointer" }}
-            >
+            <p onClick={handleUpdate} style={{ cursor: "pointer" }}>
               수정
             </p>
             <p onClick={handleDelete} style={{ cursor: "pointer" }}>

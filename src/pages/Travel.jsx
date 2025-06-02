@@ -5,7 +5,7 @@ import TravelList from "../components/TravelList";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
 
-const Travel = ({ courses, addPost }) => {
+const Travel = ({ courses }) => {
   const navigate = useNavigate();
 
   // 새 여행 코스를 추가하는 페이지로 이동
