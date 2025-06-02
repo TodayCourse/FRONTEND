@@ -1,0 +1,83 @@
+p, h3 {
+  margin: 0;
+  padding: 5px 0;
+}
+
+.TravelList {
+  display: flex;
+}
+
+.TravelList-main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.TravelList-content {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.TravelList-contents {
+  display: flex;
+  gap: 30px;
+}
+
+.TravelList-content .image {
+  width: 350px;
+}
+
+.TravelList-content .image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.TravelList-contents-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.TravelList-content ul {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+}
+
+.TravelList-content li {
+  list-style-type: none;
+  display: flex;
+  padding: 0;
+  align-items: center;
+  padding: 40px 0;
+  border-bottom: 1px solid var(--gray-color-20);
+}
+
+.TravelList-content h3 {
+  font-family: "Pretendard-SemiBold";
+  font-size: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.TravelList-content .TravelList-TravelList-btn {
+  background-color: var(--blue-color-30);
+  color: #fff;
+  font-size: 15px;
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-family: "Pretendard-Regular";
+}
+
+.TravelList-description {
+  margin-top: 10px;
+}
+
+.TravelList-description p {
+  text-overflow: ellipsis;
+}

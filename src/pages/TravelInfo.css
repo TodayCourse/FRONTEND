@@ -1,0 +1,42 @@
+.TravelInfo {
+  display: flex;
+  justify-content: center;
+}
+
+.TravelInfo-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+  width: 50%;
+}
+
+.TravelInfo-content h2 {
+  font-size: 30px;
+}
+
+.shareBtn {
+  display: flex;
+  gap: 30px;
+  width: 100%;
+  justify-content: flex-end;
+  border-bottom: 1px solid var(--gray-color-20);
+  color: var(--gray-color-50);
+  font-size: 15px;
+  padding-bottom: 10px;
+}
+
+.TravelInfo-content-des {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+}
+
+.TravelInfo-content-des .TravelInfo-des {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
