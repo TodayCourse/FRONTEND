@@ -1,0 +1,102 @@
+body {
+  margin: 0 auto;
+  padding: 0;
+  overflow: hidden;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  min-height: 100vh;
+  margin-top: 150px;
+}
+
+.login-logo img{
+  max-width: 150px;
+  width: 100%;
+}
+
+.loginWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.loginWrap .inputWrap input {
+  width: 100%;
+  max-width: 380px;
+  height: 60px;
+  padding-left: 20px;
+  background-color: #F2F3F7;
+  border: none;
+  border-radius: 8px;
+}
+
+.input ::placeholder {
+  color: #A8A8AA;
+}
+
+input:focus {
+  outline:2px solid #5463FF;
+  background-color: rgba(84, 99, 255, 0.1);
+}
+
+.errorMessage {
+  color: #FF1818;
+  margin-left: 10px;
+  margin-top: 3px;
+}
+
+.loginCheck {
+  display: flex;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttonWrap {
+  width: 100%;
+  max-width: 400px;
+}
+
+.bottomButton {
+  background-color: #5463FF;
+  width: 100%;
+  max-width: 400px;
+  height: 60px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.bottomButton:disabled {
+  background-color: #dadada;
+}
+
+.registerWrap {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  align-items: center;
+  gap: 20px;
+}
+
+.registerImage {
+  display: flex;
+  gap: 10px;
+}
+
+.registerImage img {
+  width: 50px;
+}
+
+.registerTitle u {
+  color: #5463FF;
+}
