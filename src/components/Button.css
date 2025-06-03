@@ -1,0 +1,79 @@
+.button {
+  padding: 10px 20px;
+  font-size: 15px;
+  background-color: #fff;
+  color: var(--gray-color-40);;
+  cursor: pointer;
+  border: 1px solid var(--gray-color-10);
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  font-family: 'Pretendard-Light';
+}
+
+.button:hover {
+  opacity: 0.9;
+}
+
+.button:focus {
+  outline: none;
+}
+
+/* Primary 버튼 스타일 */
+.button.primary {
+  background-color: var(--main-color);
+  color: white;
+}
+
+.button.primary:hover {
+  opacity: 0.9;
+}
+
+/* Secondary 버튼 스타일 */
+.button.secondary {
+  background-color: var(--gray-color-10);
+  color: var(--gray-color-40);
+}
+
+.button.secondary:hover {
+  opacity: 0.9;
+}
+
+.button.edit  {
+  background-color: var(--blue-color-30);
+  color: #fff;
+}
+
+/* Danger 버튼 스타일 */
+.button.danger {
+  background-color: var(--red-color-30);
+  color: white;
+}
+
+.button.danger:hover {
+  opacity: 0.9;
+}
+
+.button.handle {
+  padding: 13px 20px;
+  font-size: 14px;
+  color: #fff;
+  background-color: var(--main-color);
+  cursor: pointer;
+  border: 1px solid var(--gray-color-10);
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  font-family: 'Pretendard-Light';
+}
+
+.button.handle-secondary {
+  padding: 13px 20px;
+  font-size: 14px;
+  background-color: var(--gray-color-10);
+  color: var(--gray-color-40);
+  cursor: pointer;
+  border: 1px solid var(--gray-color-10);
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  font-family: 'Pretendard-Light';
+}
+
