@@ -86,12 +86,37 @@ const TravelList = () => {
     }
   };
 
+  // 여행 일정 텍스트 반환
+  const getTripDurationText = (startDate, endDate) => {
+    const start = dayjs(startDate);
+    const end = dayjs(endDate);
+    const diffDays = end.diff(start, "day");
+
+    if (diffDays === 0) {
+      return "당일치기";
+    } else {
+      return `${diffDays}박 ${diffDays + 1}일`;
+    }
+  };
+
+  // 해시태그 추출: #기호는 제거해서 리턴
+  const extractHashtags = (text) => {
+    const matches = text.match(/#[^\s#]+/g);
+    return matches ? matches.map((tag) => tag.slice(1)) : [];
+  };
+
+  // 해시태그 제거한 본문 텍스트
+  const removeHashtags = (text) => {
+    return text.replace(/#[^\s#]+/g, "").trim();
+  };
+
   return (
     <div className="TravelList">
       <div className="TravelList-main">
         <div className="TravelList-content">
           {loading && <p>로딩 중입니다...</p>}
           {error && <p style={{ color: "red" }}>{error}</p>}
+          <p className="TravelList-length">총 {travelList.length}개</p>
           <ul>
             {travelList && travelList.length > 0 ? (
               travelList.map((course) => (
@@ -107,13 +132,22 @@ const TravelList = () => {
                     <div className="TravelList-contents-text">
                       <p>
                         {getRegionText(course.region)}&nbsp;|&nbsp;
-                        {dayjs(course.travelStartDt).format("YYYY-MM-DD")} ~
-                        {dayjs(course.travelEndDt).format("YYYY-MM-DD")}
+                        {getTripDurationText(
+                          course.travelStartDt,
+                          course.travelEndDt
+                        )}
                       </p>
                       <h3>{course.title}</h3>
                       <p className="TravelList-description">
-                        {course.contents}
+                        {removeHashtags(course.contents)}
                       </p>
+                      <div className="TravelList-hashtags">
+                        {extractHashtags(course.contents).map((tag, index) => (
+                          <span key={index} className="hashtag">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </li>

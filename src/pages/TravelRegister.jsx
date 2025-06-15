@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { GoArrowLeft } from "react-icons/go";
+
 import Button from "../components/Button";
 import Header from "../components/Header";
 
@@ -12,21 +14,31 @@ const TravelRegister = () => {
   const navigate = useNavigate();
 
   const [error, setError] = useState(true); //eslint-disable-line no-unused-vars
-
   const [region, setRegion] = useState(""); // 지역 상태
   const [title, setTitle] = useState(""); // 제목 상태
-  // const [content, setContent] = useState(""); // 내용 상태
   const [costType, setCostType] = useState(""); // 비용 상태
   const [travelStartDt, setTravelStartDt] = useState(null); // 시작 날짜
   const [travelEndDt, setTravelEndDt] = useState(null); // 종료 날짜
-  const [category, setCategory] = useState(""); // 카테고리
+  const [categoryId, setCategoryId] = useState(""); // 카테고리
   const [vehicle, setVehicle] = useState(""); // 이동수단
   const [season, setSeason] = useState(""); // 계절
   const [contents, setContents] = useState(""); // 내용
+  const [regUserId, setRegUserId] = useState(""); //eslint-disable-line no-unused-vars
+  const [travelId, setTravelId] = useState(""); //eslint-disable-line no-unused-vars
 
   const handleSave = async () => {
-    if (!title || !contents) {
-      alert("제목과 내용을 입력해주세요!");
+    if (
+      !title ||
+      !contents ||
+      !travelStartDt ||
+      !travelEndDt ||
+      !region ||
+      !season ||
+      !categoryId ||
+      !costType ||
+      !vehicle
+    ) {
+      alert("모든 선택 항목을 입력해주세요!");
       return;
     }
 
@@ -34,11 +46,13 @@ const TravelRegister = () => {
     const travelEndDtFormatted = dayjs(travelEndDt).format("YYYY-MM-DD");
 
     const newPost = {
+      regUserId: null,
+      travelId,
       title,
       contents,
       region,
       season,
-      category,
+      categoryId,
       costType,
       vehicle,
       travelStartDt: travelStartDtFormatted,
@@ -60,7 +74,7 @@ const TravelRegister = () => {
 
       navigate("/travel");
     } catch {
-      // 오류 무시
+      console.error("에러 발생:", error);
     }
   };
 
@@ -68,11 +82,26 @@ const TravelRegister = () => {
     navigate(-1);
   };
 
+  const MobileGoArrowLeft = () => {
+    navigate("/travel");
+  };
+
   return (
     <>
-      <Header />
+      <div className="TravelRegister-Mobile-header-none">
+        <Header />
+      </div>
+
+      <div className="TravelRegister-Mobile-header">
+        <div className="Mobile-header-GoArrowLeft" onClick={MobileGoArrowLeft}>
+          <GoArrowLeft size="23" />
+        </div>
+        <div className="TravelRegister-Mobile-header-h2">
+          <h2>글쓰기</h2>
+        </div>
+      </div>
       <div className="TravelRegister-post">
-        <div className="title">
+        <div className="TravelRegister-title">
           <label>제목명</label>
           <input
             type="text"
@@ -82,8 +111,8 @@ const TravelRegister = () => {
           />
         </div>
 
-        <div className="selectGroup1">
-          <div className="selectRegion">
+        <div className="TravelRegister-selectGroup1">
+          <div className="TravelRegister-selectRegion">
             <label>지역</label>
             <select value={region} onChange={(e) => setRegion(e.target.value)}>
               <option value="" disabled>
@@ -108,7 +137,7 @@ const TravelRegister = () => {
               <option value="JEJU">제주</option>
             </select>
           </div>
-          <div className="selectSeason">
+          <div className="TravelRegister-selectSeason">
             <label>계절</label>
             <select value={season} onChange={(e) => setSeason(e.target.value)}>
               <option value="" disabled>
@@ -122,17 +151,17 @@ const TravelRegister = () => {
           </div>
         </div>
 
-        <div className="selectCategory">
+        <div className="TravelRegister-selectCategory">
           <label>카테고리</label>
           <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            value={categoryId}
+            onChange={(e) => setCategoryId(e.target.value)}
           >
             <option value="" disabled>
               카테고리를 선택해주세요.
             </option>
-            <option value="가족여행">가족여행</option>
-            <option value="드라이브">드라이브</option>
+            <option value="1">가족여행</option>
+            <option value="2">드라이브</option>
             <option value="캠핑">캠핑</option>
             <option value="트래킹">트래킹</option>
             <option value="맛집투어">맛집투어</option>
@@ -142,32 +171,36 @@ const TravelRegister = () => {
           </select>
         </div>
 
-        <div className="date-picker">
-          <label>여행 시작일</label>
-          <DatePicker
-            selected={travelStartDt}
-            onChange={(date) => setTravelStartDt(date)}
-            selectsStart
-            travelStartDtDate={travelStartDt}
-            travelEndDtDate={travelEndDt}
-            dateFormat="yyyy-MM-dd"
-            ClassName="wide-datepicker"
-          />
-          <label>여행 종료일</label>
-          <DatePicker
-            selected={travelEndDt}
-            onChange={(date) => setTravelEndDt(date)}
-            selectsEnd
-            travelStartDt={travelStartDt}
-            travelEndDtDate={travelEndDt}
-            minDate={travelStartDt}
-            dateFormat="yyyy-MM-dd"
-            ClassName="wide-datepicker"
-          />
+        <div className="TravelRegister-date-picker">
+          <div className="TravelRegister-date-StartDt">
+            <label>여행 시작일</label>
+            <DatePicker
+              selected={travelStartDt}
+              onChange={(date) => setTravelStartDt(date)}
+              selectsStart
+              travelStartDtDate={travelStartDt}
+              travelEndDtDate={travelEndDt}
+              dateFormat="yyyy-MM-dd"
+              ClassName="wide-datepicker"
+            />
+          </div>
+          <div className="TravelRegister-date-EndDt">
+            <label>여행 종료일</label>
+            <DatePicker
+              selected={travelEndDt}
+              onChange={(date) => setTravelEndDt(date)}
+              selectsEnd
+              travelStartDt={travelStartDt}
+              travelEndDtDate={travelEndDt}
+              minDate={travelStartDt}
+              dateFormat="yyyy-MM-dd"
+              ClassName="wide-datepicker"
+            />
+          </div>
         </div>
 
-        <div className="selectGroup2">
-          <div className="selectCostType">
+        <div className="TravelRegister-selectGroup2">
+          <div className="TravelRegister-selectCostType">
             <label>경비</label>
             <select
               value={costType}
@@ -184,7 +217,7 @@ const TravelRegister = () => {
               <option value="OVER_500K">50만원 이상</option>
             </select>
           </div>
-          <div className="selectVehicle">
+          <div className="TravelRegister-selectVehicle">
             <label>이동수단</label>
             <select
               value={vehicle}
@@ -202,7 +235,7 @@ const TravelRegister = () => {
           </div>
         </div>
 
-        <div className="register-textarea">
+        <div className="TravelRegister-textarea">
           <label>내용</label>
           <textarea
             value={contents}
@@ -212,8 +245,18 @@ const TravelRegister = () => {
         </div>
 
         <div className="TravelRegister_btn">
-          <Button onClick={handleCancel} text={"취소"} type="secondary" />
-          <Button onClick={handleSave} text={"저장"} type="primary" />
+          <Button
+            className="TravelRegister-handleCancel"
+            onClick={handleCancel}
+            text={"취소"}
+            type="secondary"
+          />
+          <Button
+            className="TravelRegister-handleSave"
+            onClick={handleSave}
+            text={"저장"}
+            type="primary"
+          />
         </div>
       </div>
     </>

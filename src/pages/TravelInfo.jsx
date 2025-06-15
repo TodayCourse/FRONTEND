@@ -5,6 +5,7 @@ import Button from "../components/Button";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
+import { GoArrowLeft } from "react-icons/go";
 
 import dayjs from "dayjs";
 
@@ -71,10 +72,10 @@ const getCostTypeText = (costType) => {
 };
 
 // 카테고리
-const getCategoryText = (category) => {
-  const categoryMap = {
-    FAMILY: "가족여행",
-    drive: "드라이브",
+const getCategoryIdText = (categoryId) => {
+  const categoryIdMap = {
+    1: "가족여행",
+    2: "드라이브",
     camp: "캠핑",
     tracking: "트래킹",
     eat: "맛집투어",
@@ -83,7 +84,7 @@ const getCategoryText = (category) => {
     bike: "자전거여행",
   };
 
-  return categoryMap[category] || "알 수 없음"; // 해당 카테고리가 없으면 "알 수 없음" 반환
+  return categoryIdMap[categoryId] || "알 수 없음"; // 해당 카테고리가 없으면 "알 수 없음" 반환
 };
 
 const getVehicleText = (vehicle) => {
@@ -184,16 +185,58 @@ const TravelInfo = () => {
     navigate(`/travelupdate/${travelId}`); // 수정 페이지로 이동
   };
 
+  const MobileGoArrowLeft = () => {
+    navigate("/Travel");
+  };
+
+  // 여행 일정 텍스트 반환
+  const getTripDurationText = (startDate, endDate) => {
+    const start = dayjs(startDate);
+    const end = dayjs(endDate);
+    const diffDays = end.diff(start, "day");
+
+    if (diffDays === 0) {
+      return "당일치기";
+    } else {
+      return `${diffDays}박 ${diffDays + 1}일`;
+    }
+  };
+
+  // 해시태그 추출: #기호는 제거해서 리턴
+  const extractHashtags = (text) => {
+    const matches = text.match(/#[^\s#]+/g);
+    return matches ? matches.map((tag) => tag.slice(1)) : [];
+  };
+
+  // 해시태그 제거한 본문 텍스트
+  const removeHashtags = (text) => {
+    return text.replace(/#[^\s#]+/g, "").trim();
+  };
+
   return (
     <>
-      <Header />
+      <div className="TravelInfo-Mobile-header-none">
+        <Header />
+      </div>
+
+      <div className="TravelInfo-Mobile-header">
+        <div
+          className="TravelInfo-Mobile-header-GoArrowLeft"
+          onClick={MobileGoArrowLeft}
+        >
+          <GoArrowLeft size="23" />
+        </div>
+        <div className="TravelInfo-Mobile-header-h2">
+          <h2>여행코스</h2>
+        </div>
+      </div>
+
       <div className="TravelInfo">
         <div className="TravelInfo-content">
           {/* 지역과 기간을 텍스트로 변환하여 표시 */}
           <p>
             {getRegionText(post.region)}&nbsp;|&nbsp;
-            {dayjs(post.travelStartDt).format("YYYY-MM-DD")} ~
-            {dayjs(post.travelEndDt).format("YYYY-MM-DD")}
+            {getTripDurationText(post.travelStartDt, post.travelEndDt)}
           </p>
 
           <h2>{post.title}</h2>
@@ -208,7 +251,23 @@ const TravelInfo = () => {
 
           <div className="TravelInfo-content-des">
             <p className="TravelInfo-des" style={{ justifyContent: "center" }}>
-              {post.contents}
+              {removeHashtags(post.contents)}
+            </p>
+
+            <div className="TravelInfo-hashtags">
+              {extractHashtags(post.contents).map((tag, index) => (
+                <span key={index} className="hashtag">
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <p className="TravelInfo-des">
+              여행기간
+              <span>
+                {dayjs(post.travelStartDt).format("YYYY-MM-DD")} ~{" "}
+                {dayjs(post.travelEndDt).format("YYYY-MM-DD")}
+              </span>
             </p>
             <p className="TravelInfo-des">
               지역<span>{getRegionText(post.region)}</span>
@@ -217,7 +276,7 @@ const TravelInfo = () => {
               계절 <span>{getSeasonText(post.season)}</span>
             </p>
             <p className="TravelInfo-des">
-              카테고리 <span>{getCategoryText(post.category)}</span>
+              카테고리 <span>{getCategoryIdText(post.categoryId)}</span>
             </p>
             <p className="TravelInfo-des">
               경비<span>{getCostTypeText(post.costType)}</span>

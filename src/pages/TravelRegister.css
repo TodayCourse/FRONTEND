@@ -8,7 +8,9 @@ body{
 body {
   overflow: auto;
 }  /* 전체 페이지에 스크롤 허용 */
-
+.TravelRegister-Mobile-header {
+  display: none;
+}
 
 .TravelRegister-post {
   display: flex;
@@ -30,7 +32,7 @@ input:focus {
   outline: none;
 }
 
-.title {
+.TravelRegister-title {
   display: flex;
   gap: 50px;
   width: 100%;
@@ -50,13 +52,13 @@ input:focus {
   width: 100%;
 }
 
-.selectGroup1, .selectGroup2 {
+.TravelRegister-selectGroup1, .TravelRegister-selectGroup2 {
   display: flex;
   width: 100%;
   gap: 40px;
 }
 
-.selectRegion, .selectSeason {
+.TravelRegister-selectRegion, .TravelRegister-selectSeason {
   display: flex;
   gap: 65px;
   width: 50%;
@@ -64,7 +66,7 @@ input:focus {
   align-items: center;
 }
 
-.selectCostType {
+.TravelRegister-selectCostType {
   display: flex;
   gap: 65px;
   width: 50%;
@@ -72,7 +74,7 @@ input:focus {
   align-items: center;
 }
 
-.selectVehicle {
+.TravelRegister-selectVehicle {
   display: flex;
   gap: 30px;
   width: 50%;
@@ -80,7 +82,7 @@ input:focus {
   align-items: center;
 }
 
-.selectCategory {
+.TravelRegister-selectCategory {
   display: flex;
   gap: 40px;
   width: 100%;
@@ -88,7 +90,13 @@ input:focus {
   align-items: center;
 }
 
-.date-picker {
+.TravelRegister-date-picker {
+  display: flex;
+  width: 100%;
+  gap: 40px;
+}
+
+.TravelRegister-date-picker .TravelRegister-date-StartDt, .TravelRegister-date-picker .TravelRegister-date-EndDt {
   display: flex;
   gap: 20px;
   width: 100%;
@@ -106,7 +114,7 @@ input:focus {
   display: flex !important;
 }
 
-.date-picker label {
+.TravelRegister-date-picker label {
   display: flex;
 }
 
@@ -120,79 +128,126 @@ input:focus {
   height: 60px;
 }
 
-.courseAdd {
-  display: flex;
-  gap: 30px;
-  align-items: center;
-  width: 100%;
-  white-space: nowrap;
-}
-.courseAdd .courseAddBtn {
-  width: 100%;
-  height: 60px;
-  border: 1px solid #000;
-  background-color: #fff;
-  border-radius: 8px;
-}
-
-.handleButton {
-  display: flex;
-  gap: 10px;
-  width: 100%;
-  justify-content: flex-end;
-}
-
-.info-form {
-  width: 100%;
-}
-
-.info-form input {
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-
-.info-form .place {
-  display: flex;
-  white-space: nowrap;
-  gap: 30px;
-  align-items: center;
-}
-
-.info-form .address {
-  display: flex;
-  white-space: nowrap;
-  gap: 45px;
-  align-items: center;
-}
-
-.info-form .information {
-  display: flex;
-  white-space: nowrap;
-  gap: 20px;
-  align-items: center;
-}
-
-.courseEdit {
-  width: 100%;
-  display: flex;
-  gap: 20px;
-  white-space: nowrap;
-  align-items: center;
-}
-
-
-.courseEdit Button {
-  width: 100%;
-  height: 60px;
-}
-
-.register-textarea {
+.TravelRegister-textarea {
   width: 100%;
   display: flex;
   white-space: nowrap;
   gap: 65px;
 }
 
-.register-textarea textarea {
+.TravelRegister-textarea textarea {
   padding-top: 20px;
+}
+
+/* 모바일 (휴대폰, 태블릿 세로) */
+@media only screen and (min-width: 200px) and (max-width: 1000px) {
+ .TravelRegister-post {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 100px;
+    align-items: center;
+    height: 100%;
+  }
+
+  .selectGroup1, .selectGroup2 {
+    display: flex !important;
+    flex-direction: row !important;
+  }
+}
+
+@media only screen and (min-width: 200px) and (max-width: 499px) {
+  .TravelRegister-Mobile-header-none {
+    display: none;
+  }
+  
+  .TravelRegister-Mobile-header {
+    position: relative;
+    height: 80px; 
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+  }
+  
+  .TravelRegister-Mobile-header-GoArrowLeft {
+    position: absolute;
+    left: 24px;
+  }
+  
+  .TravelRegister-Mobile-header-h2 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .TravelRegister-Mobile-header-h2 h2 {
+    padding: 0;
+    margin: 0;
+    font-weight: 600;
+    font-size: 22px;
+  }
+
+  .TravelRegister-post {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 20px 24px;
+    align-items: center;
+    height: 100%;
+  }
+
+  .TravelRegister-selectGroup1, .TravelRegister-selectGroup2 {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .TravelRegister-selectRegion, .TravelRegister-selectSeason, .TravelRegister-selectCostType, .TravelRegister-selectVehicle {
+    display: flex;
+    gap: 50px;
+    width: 100% !important;
+    white-space: nowrap;
+    align-items: center;
+  }
+
+  .TravelRegister-selectRegion, .TravelRegister-selectSeason {
+    gap: 65px;
+  }
+
+  .TravelRegister-selectCostType {
+    gap: 65px !important;
+  }
+
+  .TravelRegister-selectCategory, .TravelRegister-selectVehicle {
+    gap: 40px !important;
+  }
+
+  .TravelRegister-date-picker {
+    display: flex;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  .TravelRegister-date-picker {
+    display: flex;
+    width: 100%;
+    gap: 40px;
+  }
+
+  .TravelRegister-date-picker .TravelRegister-date-StartDt, .TravelRegister-date-picker .TravelRegister-date-EndDt{
+    display: flex;
+    flex-direction: row;
+    white-space: nowrap;
+    width: 100%;
+    align-items: center;
+    gap: 22px;
+  }
+
+  .TravelRegister-handleCancel {
+    display: none;
+  }
+
+  .TravelRegister_btn .TravelRegister-handleSave {
+    width: 382px !important; 
+    height: 60px;
+  }
 }

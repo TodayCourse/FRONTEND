@@ -1,6 +1,7 @@
 import "./Travel.css";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
+import MobileHeader from "../components/MobileHeader";
 import TravelList from "../components/TravelList";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
@@ -16,12 +17,14 @@ const Travel = ({ courses }) => {
   return (
     <>
       <Header />
-
+      <div className="Travel-MobileHeader">
+        <MobileHeader />
+      </div>
       <div className="Travel">
-        <div className="course-list-btn">
+        <div className="travel-list-btn">
           {/* 새 여행 코스 추가 버튼 */}
           <Button
-            className="Button_1"
+            className="travel-list-button"
             onClick={goToNewPage}
             text={"+ 새 여행 코스 추가"}
           />

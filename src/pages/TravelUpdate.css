@@ -9,6 +9,9 @@ body {
   overflow: auto;
 }  /* 전체 페이지에 스크롤 허용 */
 
+.TravelUpdate-Mobile-header {
+  display: none;
+}
 
 .TravelUpdate-post {
   display: flex;
@@ -50,13 +53,13 @@ input:focus {
   width: 100%;
 }
 
-.selectGroup1, .selectGroup2 {
+.TravelUpdate-selectGroup1, .TravelUpdate-selectGroup2 {
   display: flex;
   width: 100%;
   gap: 40px;
 }
 
-.selectRegion, .selectSeason {
+.TravelUpdate-selectRegion, .TravelUpdate-selectSeason {
   display: flex;
   gap: 65px;
   width: 50%;
@@ -64,7 +67,7 @@ input:focus {
   align-items: center;
 }
 
-.selectCostType {
+.TravelUpdate-selectCostType {
   display: flex;
   gap: 65px;
   width: 50%;
@@ -72,7 +75,7 @@ input:focus {
   align-items: center;
 }
 
-.selectVehicle {
+.TravelUpdate-selectVehicle {
   display: flex;
   gap: 30px;
   width: 50%;
@@ -80,7 +83,7 @@ input:focus {
   align-items: center;
 }
 
-.selectCategory {
+.TravelUpdate-selectCategory {
   display: flex;
   gap: 40px;
   width: 100%;
@@ -88,7 +91,13 @@ input:focus {
   align-items: center;
 }
 
-.date-picker {
+.TravelUpdate-date-picker {
+  display: flex;
+  width: 100%;
+  gap: 40px;
+}
+
+.TravelUpdate-date-picker .TravelUpdate-date-StartDt, .TravelUpdate-date-picker .TravelUpdate-date-EndDt {
   display: flex;
   gap: 20px;
   width: 100%;
@@ -106,7 +115,7 @@ input:focus {
   display: flex !important;
 }
 
-.date-picker label {
+.TravelUpdate-date-picker label {
   display: flex;
 }
 
@@ -129,4 +138,99 @@ input:focus {
 
 .TravelUpdate-textarea textarea {
   padding-top: 20px;
+}
+
+@media only screen and (min-width: 200px) and (max-width: 499px) {
+  .TravelUpdate-Mobile-header-none {
+    display: none;
+  }
+  
+  .TravelUpdate-Mobile-header {
+    display: inline;
+  }
+  
+  .TravelUpdate-Mobile-header {
+    position: relative;
+    height: 80px; 
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+  }
+  
+  .TravelUpdate-Mobile-header-GoArrowLeft {
+    position: absolute;
+    left: 24px;
+  }
+  
+  .TravelUpdate-Mobile-header-h2 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .TravelUpdate-Mobile-header-h2 h2 {
+    padding: 0;
+    margin: 0;
+    font-weight: 600;
+    font-size: 22px;
+  }
+
+  .TravelUpdate-post {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 20px 24px;
+    align-items: center;
+    height: 100%;
+  }
+
+  .TravelUpdate-selectGroup1, .TravelUpdate-selectGroup2 {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .TravelUpdate-selectRegion, .TravelUpdate-selectSeason, .TravelUpdate-selectCostType, .TravelUpdate-selectVehicle {
+    display: flex;
+    gap: 50px;
+    width: 100% !important;
+    white-space: nowrap;
+    align-items: center;
+  }
+
+  .TravelUpdate-selectRegion, .TravelUpdate-selectSeason {
+    gap: 65px;
+  }
+
+  .TravelUpdate-selectCostType {
+    gap: 65px !important;
+  }
+
+  .TravelUpdate-selectCategory, .TravelUpdate-selectVehicle {
+    gap: 40px !important;
+  }
+
+  .TravelUpdate-date-picker {
+    display: flex;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  .TravelUpdate-date-picker .TravelUpdate-date-StartDt, .TravelUpdate-date-picker .TravelUpdate-date-EndDt{
+    display: flex;
+    flex-direction: row;
+    white-space: nowrap;
+    width: 100%;
+    align-items: center;
+    gap: 22px;
+  }
+
+
+  .TravelUpdate-End {
+    display: none;
+  }
+
+  .TravelUpdate_btn .TravelUpdate-handleSave {
+    width: 382px !important; 
+    height: 60px;
+  }
 }

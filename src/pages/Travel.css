@@ -1,3 +1,7 @@
+.Travel-MobileHeader {
+    display:none;
+  }
+
 .Travel {
   display: flex;
   justify-content:flex-start;
@@ -10,7 +14,33 @@
   margin-top: 40px;
 }
 
-.course-list-btn {
+.travel-list-btn {
   display: flex;
   justify-content: flex-end;
+}
+
+@media only screen and (min-width: 500px) and (max-width: 1000px) {
+
+  .Travel {
+    padding: 0 100px;
+  }
+}
+
+@media only screen and (min-width: 200px) and (max-width: 499px) {
+
+  .Travel {
+    padding: 0 24px;
+    margin-top: 40px;
+    gap: 30px;
+  }
+
+  .travel-list-btn {
+    margin: 0;
+    padding: 0;
+  }
+
+  .Travel-MobileHeader {
+    display:inline;
+  }
+
 }

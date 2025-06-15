@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Button from "../components/Button";
 import Header from "../components/Header";
+import { GoArrowLeft } from "react-icons/go";
 
 import dayjs from "dayjs";
 
@@ -22,7 +23,7 @@ const TravelUpdate = () => {
   const [costType, setCostType] = useState("");
   const [travelStartDt, setTravelStartDt] = useState(null);
   const [travelEndDt, setTravelEndDt] = useState(null);
-  const [category, setCategory] = useState("");
+  const [categoryId, setCategoryId] = useState("");
   const [season, setSeason] = useState("");
   const [regUserId, setRegUserId] = useState(""); //eslint-disable-line no-unused-vars
   const [vehicle, setVehicle] = useState("");
@@ -47,7 +48,7 @@ const TravelUpdate = () => {
         setCostType(data.costType);
         setTravelStartDt(new Date(data.travelStartDt));
         setTravelEndDt(new Date(data.travelEndDt));
-        setCategory(data.category);
+        setCategoryId(data.categoryId);
         setVehicle(data.vehicle);
         setSeason(data.season);
       } catch (error) {
@@ -65,7 +66,7 @@ const TravelUpdate = () => {
       !contents ||
       !region ||
       !season ||
-      !category ||
+      !categoryId ||
       !costType ||
       !vehicle ||
       !travelStartDt ||
@@ -86,7 +87,7 @@ const TravelUpdate = () => {
       costType,
       travelStartDt: travelStartDtFormatted,
       travelEndDt: travelEndDtFormatted,
-      category,
+      categoryId,
       season,
       vehicle,
     };
@@ -114,9 +115,28 @@ const TravelUpdate = () => {
     }
   };
 
+  const MobileGoArrowLeft = () => {
+    navigate(`/travelinfo/${travelId}`);
+  };
+
   return (
     <>
-      <Header />
+      <div className="TravelUpdate-Mobile-header-none">
+        <Header />
+      </div>
+
+      <div className="TravelUpdate-Mobile-header">
+        <div
+          className="TravelUpdate-Mobile-header-GoArrowLeft"
+          onClick={MobileGoArrowLeft}
+        >
+          <GoArrowLeft size="23" />
+        </div>
+        <div className="TravelUpdate-Mobile-header-h2">
+          <h2>수정하기</h2>
+        </div>
+      </div>
+
       <div className="TravelUpdate-post">
         <div className="title">
           <label>제목명</label>{" "}
@@ -128,8 +148,8 @@ const TravelUpdate = () => {
           />
         </div>
 
-        <div className="selectGroup1">
-          <div className="selectRegion">
+        <div className="TravelUpdate-selectGroup1">
+          <div className="TravelUpdate-selectRegion">
             <label>지역</label>
             <select value={region} onChange={(e) => setRegion(e.target.value)}>
               <option value="" disabled>
@@ -155,7 +175,7 @@ const TravelUpdate = () => {
             </select>
           </div>
 
-          <div className="selectSeason">
+          <div className="TravelUpdate-selectSeason">
             <label>계절</label>
             <select value={season} onChange={(e) => setSeason(e.target.value)}>
               <option value="" disabled>
@@ -169,17 +189,17 @@ const TravelUpdate = () => {
           </div>
         </div>
 
-        <div className="selectCategory">
+        <div className="TravelUpdate-selectCategory">
           <label>카테고리</label>
           <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            value={categoryId}
+            onChange={(e) => setCategoryId(e.target.value)}
           >
             <option value="" disabled>
               카테고리를 선택해주세요.
             </option>
-            <option value="family">가족여행</option>
-            <option value="drive">드라이브</option>
+            <option value="1">가족여행</option>
+            <option value="2">드라이브</option>
             <option value="camp">캠핑</option>
             <option value="tracking">트래킹</option>
             <option value="eat">맛집투어</option>
@@ -189,32 +209,32 @@ const TravelUpdate = () => {
           </select>
         </div>
 
-        <div className="date-picker">
-          <label>여행 시작일</label>
-          <DatePicker
-            selected={travelStartDt}
-            onChange={(date) => setTravelStartDt(date)}
-            selectsStart
-            travelStartDtDate={travelStartDt}
-            travelEndDtDate={travelEndDt}
-            dateFormat="yyyy-MM-dd"
-            ClassName="wide-datepicker"
-          />
-          <label>여행 종료일</label>
-          <DatePicker
-            selected={travelEndDt}
-            onChange={(date) => setTravelEndDt(date)}
-            selectsEnd
-            travelStartDt={travelStartDt}
-            travelEndDtDate={travelEndDt}
-            minDate={travelStartDt}
-            dateFormat="yyyy-MM-dd"
-            ClassName="wide-datepicker"
-          />
+        <div className="TravelUpdate-date-picker">
+          <div className="TravelUpdate-date-StartDt">
+            <label>여행 시작일</label>
+            <DatePicker
+              selected={travelStartDt}
+              onChange={(date) => setTravelStartDt(date)}
+              selectsStart
+              dateFormat="yyyy-MM-dd"
+              ClassName="wide-datepicker"
+            />
+          </div>
+          <div className="TravelUpdate-date-EndDt">
+            <label>여행 종료일</label>
+            <DatePicker
+              selected={travelEndDt}
+              onChange={(date) => setTravelEndDt(date)}
+              selectsEnd
+              minDate={travelStartDt}
+              dateFormat="yyyy-MM-dd"
+              ClassName="wide-datepicker"
+            />
+          </div>
         </div>
 
-        <div className="selectGroup2">
-          <div className="selectCostType">
+        <div className="TravelUpdate-selectGroup2">
+          <div className="TravelUpdate-selectCostType">
             <label>경비</label>
             <select
               value={costType}
@@ -232,7 +252,7 @@ const TravelUpdate = () => {
             </select>
           </div>
 
-          <div className="selectVehicle">
+          <div className="TravelUpdate-selectVehicle">
             <label>이동수단</label>
             <select
               value={vehicle}
@@ -262,11 +282,17 @@ const TravelUpdate = () => {
         {/* 버튼 */}
         <div className="TravelUpdate_btn">
           <Button
+            className="TravelUpdate-End"
             onClick={() => navigate(`/travelinfo/${travelId}`)}
             text={"취소"}
             type="secondary"
           />
-          <Button onClick={handleSave} text={"저장"} type="primary" />
+          <Button
+            className="TravelUpdate-handleSave"
+            onClick={handleSave}
+            text={"저장"}
+            type="primary"
+          />
         </div>
       </div>
     </>
