@@ -1,0 +1,70 @@
+.RandomTravel-MobileHeader {
+    display: none;
+  }
+
+.RandomTravel {
+  display: flex;
+  padding: 100px 300px;
+  gap: 100px;
+}
+
+.RandomTravel-map {
+  position: relative;
+  width: 550px;
+  height: 770px;
+  overflow: hidden;
+}
+
+.MapImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.Marker {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  font-size: 24px;
+}
+
+.RandomTravel-text {
+  font-size: 20px;
+}
+
+@media only screen and (min-width: 200px) and (max-width: 499px) {
+  .RandomTravel-MobileHeader {
+    display:inline;
+  }
+  
+  .RandomTravel {
+    display: flex;
+    padding: 0 24px;
+  }
+  
+  .RandomTravel-map {
+  position: relative;
+  width: 550px;
+  height: 770px;
+  overflow: hidden;
+}
+
+.MapImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.Marker {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  font-size: 24px;
+}
+
+.RandomTravel-text {
+  font-size: 20px;
+}
+
+
+}
