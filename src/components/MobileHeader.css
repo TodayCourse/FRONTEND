@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.MobileHeader-menu {
+  display:flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--gray-color-20);
+  padding: 5px 0;
+  align-items: center;
+}
+
+.MobileHeader-nav {
+  width: 600px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.MobileHeader-nav a {
+  color: inherit;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 10px 20px;
+  display: inline-block;
+  text-align: center;
+}
+
+.MobileHeader-nav a:hover{
+  background-color: white;
+  color: var(--main-color);
+}
+
+.MobileHeader-nav a.active {
+  text-decoration: underline;
+  text-underline-offset : 18px;
+  text-decoration-color: var(--main-color);
+  text-decoration-thickness: 2px;
+}

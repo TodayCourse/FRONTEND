@@ -1,0 +1,21 @@
+.home-dots {
+  position: fixed;
+  top: 40%;
+  left: 100px;
+}
+
+.home-dots-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 20px;
+  height: 150px;
+}
+
+@media only screen and (min-width: 200px) and (max-width: 499px) {
+  .home-dots {
+    left: 50px;
+    top: 45%;
+  }
+}

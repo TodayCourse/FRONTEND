@@ -1,0 +1,92 @@
+.terms-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+.terms {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 600px;
+}
+
+.terms .title {
+  justify-content: center;
+}
+
+.terms-form {
+  width: 100%;
+  margin: 60px 0;
+}
+
+.terms-form .allcheck {
+  background-color: var(--gray-color-10);
+  padding: 20px;
+  display: flex;
+  border-radius: 6px;
+}
+
+.terms .terms-item {
+  display: flex;
+  flex-direction: column; /* 세로 정렬 */
+  padding: 20px;
+}
+
+.terms .terms-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.terms .terms-check {
+  display: flex;
+  align-items: center;
+}
+
+input[type="checkbox" i] {
+  margin: 3px 20px 3px 4px;
+}
+
+.terms .terms-detail-btn {
+  background: none;
+  border: none;
+  color: #5463FF;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.terms .terms-detail-btn:hover {
+  text-decoration: underline;
+}
+
+.terms .terms-content {
+  margin-top: 5px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #333;
+  width: 100%;
+}
+
+.terms-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 60px;
+  background-color: var(--main-color);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+}
+
+.terms-btn:disabled {
+  background-color: var(--main-color-10);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: not-allowed;
+}
