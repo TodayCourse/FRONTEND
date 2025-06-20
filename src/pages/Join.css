@@ -1,0 +1,108 @@
+.Join {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Join-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  max-width: 700px;
+}
+
+.Join-form input {
+  height: 60px;
+  width: 680px;
+  background-color: var(--gray-color-10);
+  border: none;
+  padding: 0 0 0 20px;
+  border-radius: 8px;
+}
+
+input:focus {
+  outline: none;
+}
+
+.Join-title {
+  display: flex;
+  gap: 50px;
+  width: 100%;
+  margin-top: 100px;
+  white-space: nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.Join-form input:focus {
+  outline: none;
+  background-color: var(--main-color-10);
+  border: 1px solid var(--main-color);
+}
+
+.Join-form select {
+  height: 60px;
+  border: 1px solid var(--gray-color-10);
+  padding: 0 20px;
+  width: 100%;
+}
+
+.selectGroup {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+  padding: 60px 0;
+}
+
+.selectName, .selectTel, .selectCheckNumber, .selectPassword, .selectCheckNumber {
+  display: flex;
+  gap: 10px;
+  white-space: nowrap;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.selectName label, .selectEmail label {
+  padding-left: 10px;
+}
+
+.selectNickname, .selectEmail {
+  display: flex;
+  gap: 10px;
+  white-space: nowrap;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.nickname-input, .email-input {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.join-check-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  height: 60px;
+  background-color: var(--main-color);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+}
+
+.join-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 60px;
+  background-color: var(--main-color);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+}
