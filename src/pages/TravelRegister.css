@@ -128,6 +128,13 @@ input:focus {
   height: 60px;
 }
 
+.TravelRegister-textarea-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+}
+
 .TravelRegister-textarea {
   width: 100%;
   display: flex;
@@ -137,6 +144,168 @@ input:focus {
 
 .TravelRegister-textarea textarea {
   padding-top: 20px;
+}
+
+.TravelRegister-hashtags-text {
+  font-size: 14px;
+  color: var(--red-color);
+  margin: 10px 0 0 95px;
+}
+
+.TravelRegister-CourseAdd {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: transparent;
+}
+
+.TravelRegister-Course .TravelRegister-CourseAdd button {
+  background-color: transparent;
+  border: 1px dashed var(--main-color);
+  border-radius: 8px;
+}
+
+.TravelRegister-Course {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  white-space: nowrap;
+  align-items: center;
+}
+
+.TravelRegister-Course button {
+  height: 60px;
+  width: 100%;
+  border: none;
+}
+
+.CourseForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.CourseForm-place {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.CourseForm-category {
+  display: flex;
+  align-items: center;
+  gap: 37px;
+}
+
+.CourseForm-category select {
+  border-radius: 8px;
+}
+
+.CourseForm-address {
+  display: flex;
+  align-items: center;
+  gap: 65px;
+}
+
+.CourseForm-time {
+  display: flex;
+  align-items: center;
+  gap: 37px;
+}
+
+.CourseForm-contact {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.CourseForm input {
+  display: flex;
+  border-radius: 8px;
+}
+
+.TravelRegister-courseButtons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.TravelRegister-courseButtons p {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+}
+
+.TravelRegister-courseButtons-btn {
+  right: 0;
+  display: flex;
+  gap: 10px;
+}
+
+.TravelRegister-courseButtons-btn button {
+  width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bottom-sheet-header-closeBtn {
+  display: none;
+}
+
+.TravelRegister-Course ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  gap: 30px;
+  margin: 0 0 40px 0;
+}
+
+.TravelRegister-Course li {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.CourseForm-Content {
+  width: 100%;
+}
+
+.CourseForm-Content-btn {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+}
+
+.CourseForm-Content-btn button {
+  border-radius: 8px;
+}
+
+.CourseForm-EditBtn {
+  background-color: var(--main-color-90);
+  color: #fff;
+}
+
+.TravelRegisterContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.TravelRegister-courseButtons-mobilebtn {
+  display: none;
+}
+
+input::placeholder {
+  color: var(--gray-color-40);
+}
+
+select:not(:-internal-list-box):not([multiple]) option:disabled {
+  color: var(--gray-color-40);
 }
 
 /* 모바일 (휴대폰, 태블릿 세로) */
@@ -190,7 +359,7 @@ input:focus {
   .TravelRegister-post {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 20px;
     padding: 20px 24px;
     align-items: center;
     height: 100%;
@@ -199,6 +368,7 @@ input:focus {
   .TravelRegister-selectGroup1, .TravelRegister-selectGroup2 {
     display: flex !important;
     flex-direction: column !important;
+    gap: 20px;
   }
 
   .TravelRegister-selectRegion, .TravelRegister-selectSeason, .TravelRegister-selectCostType, .TravelRegister-selectVehicle {
@@ -230,7 +400,7 @@ input:focus {
   .TravelRegister-date-picker {
     display: flex;
     width: 100%;
-    gap: 40px;
+    gap: 20px;
   }
 
   .TravelRegister-date-picker .TravelRegister-date-StartDt, .TravelRegister-date-picker .TravelRegister-date-EndDt{
@@ -242,12 +412,115 @@ input:focus {
     gap: 22px;
   }
 
+  .TravelRegister_btn {
+    width: 100%;
+    gap: 10px;
+  }
+
   .TravelRegister-handleCancel {
-    display: none;
+    /* display: none; */
   }
 
   .TravelRegister_btn .TravelRegister-handleSave {
-    width: 382px !important; 
     height: 60px;
   }
+
+  .CourseForm {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-height: 80vh;
+  background: white;
+  box-shadow: 0 -3px 10px rgba(0,0,0,0.2);
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  overflow-y: auto;
+  transform: translateY(100%);
+  animation: slide-up 0.3s forwards;
+  z-index: 1000;
+}
+
+.TravelRegister-courseButtons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  font-weight: bold;
+}
+
+.TravelRegisterContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 16px 24px;
+}
+
+/* 슬라이드 업 애니메이션 */
+@keyframes slide-up {
+  to {
+    transform: translateY(0);
+  }
+}
+
+.bottom-sheet-header-closeBtn {
+  display: inline;
+  background-color: transparent;
+  width: 100% !important;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 24px;
+}
+
+.bottom-sheet-header {
+  display: flex;
+}
+
+.TravelRegister-courseButtons-btn {
+  display: none;
+}
+
+.TravelRegister-courseButtons-mobilebtn {
+  right: 0;
+  display: flex;
+  gap: 10px;
+  margin: 0 24px 20px 24px;
+}
+
+.CourseForm-Content-btn {
+  gap: 10px;
+}
+
+.TravelRegister-Course li {
+  gap: 45px;
+}
+
+.TravelRegister-Course ul {
+  display: flex;
+  gap: 15px;
+  margin: 0 0 20px 0;
+}
+
+.mobile-background {
+  width: 100vh;
+  border: 3px solid var(--gray-color-10);
+  padding: 0;
+}
+
+.CourseForm-place, .CourseForm-category, .CourseForm-address, .CourseForm-time {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex-direction: column;
+}
+
+.CourseForm-category select {
+  border-radius: 8px;
+}
+
+.TravelRegister-post input {
+  width: 88%;
+}
+
 }

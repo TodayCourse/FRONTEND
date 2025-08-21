@@ -1,11 +1,11 @@
 import "./Travel.css";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
-import MobileHeader from "../components/MobileHeader";
 import TravelList from "../components/TravelList";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
 
+import add from "../assets/images/add.png";
 const Travel = ({ courses }) => {
   const navigate = useNavigate();
 
@@ -17,16 +17,18 @@ const Travel = ({ courses }) => {
   return (
     <>
       <Header />
-      <div className="Travel-MobileHeader">
-        <MobileHeader />
-      </div>
       <div className="Travel">
         <div className="travel-list-btn">
           {/* 새 여행 코스 추가 버튼 */}
-          <Button
+          {/* <Button
             className="travel-list-button"
             onClick={goToNewPage}
             text={"+ 새 여행 코스 추가"}
+          /> */}
+          <img
+            src={add}
+            className="travel-list-button-img"
+            onClick={goToNewPage}
           />
         </div>
         <TravelList courses={courses} />

@@ -1,5 +1,5 @@
 html,
-body{
+body {
   margin: 0;
   overflow: scroll;
 }
@@ -22,7 +22,8 @@ body {
   height: 100%;
 }
 
-.TravelUpdate-post input, textarea {
+.TravelUpdate-post input,
+textarea {
   height: 60px;
   width: 100%;
   border: 1px solid var(--gray-color-20);
@@ -33,7 +34,7 @@ input:focus {
   outline: none;
 }
 
-.title {
+.TravelUpdate-post .title {
   display: flex;
   gap: 50px;
   width: 100%;
@@ -53,13 +54,15 @@ input:focus {
   width: 100%;
 }
 
-.TravelUpdate-selectGroup1, .TravelUpdate-selectGroup2 {
+.TravelUpdate-selectGroup1,
+.TravelUpdate-selectGroup2 {
   display: flex;
   width: 100%;
   gap: 40px;
 }
 
-.TravelUpdate-selectRegion, .TravelUpdate-selectSeason {
+.TravelUpdate-selectRegion,
+.TravelUpdate-selectSeason {
   display: flex;
   gap: 65px;
   width: 50%;
@@ -97,7 +100,8 @@ input:focus {
   gap: 40px;
 }
 
-.TravelUpdate-date-picker .TravelUpdate-date-StartDt, .TravelUpdate-date-picker .TravelUpdate-date-EndDt {
+.TravelUpdate-date-picker .TravelUpdate-date-StartDt,
+.TravelUpdate-date-picker .TravelUpdate-date-EndDt {
   display: flex;
   gap: 20px;
   width: 100%;
@@ -125,8 +129,15 @@ input:focus {
 }
 
 .TravelUpdate_btn button {
-  width: 200px; 
+  width: 200px;
   height: 60px;
+}
+
+.TravelUpdate-textarea-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
 }
 
 .TravelUpdate-textarea {
@@ -140,28 +151,34 @@ input:focus {
   padding-top: 20px;
 }
 
+.TravelUpdate-hashtags-text {
+  font-size: 14px;
+  color: var(--red-color);
+  margin: 10px 0 0 95px;
+}
+
 @media only screen and (min-width: 200px) and (max-width: 499px) {
   .TravelUpdate-Mobile-header-none {
     display: none;
   }
-  
+
   .TravelUpdate-Mobile-header {
     display: inline;
   }
-  
+
   .TravelUpdate-Mobile-header {
     position: relative;
-    height: 80px; 
+    height: 80px;
     display: flex;
     align-items: center;
     padding: 0 24px;
   }
-  
+
   .TravelUpdate-Mobile-header-GoArrowLeft {
     position: absolute;
     left: 24px;
   }
-  
+
   .TravelUpdate-Mobile-header-h2 {
     position: absolute;
     left: 50%;
@@ -184,12 +201,16 @@ input:focus {
     height: 100%;
   }
 
-  .TravelUpdate-selectGroup1, .TravelUpdate-selectGroup2 {
+  .TravelUpdate-selectGroup1,
+  .TravelUpdate-selectGroup2 {
     display: flex !important;
     flex-direction: column !important;
   }
 
-  .TravelUpdate-selectRegion, .TravelUpdate-selectSeason, .TravelUpdate-selectCostType, .TravelUpdate-selectVehicle {
+  .TravelUpdate-selectRegion,
+  .TravelUpdate-selectSeason,
+  .TravelUpdate-selectCostType,
+  .TravelUpdate-selectVehicle {
     display: flex;
     gap: 50px;
     width: 100% !important;
@@ -197,7 +218,8 @@ input:focus {
     align-items: center;
   }
 
-  .TravelUpdate-selectRegion, .TravelUpdate-selectSeason {
+  .TravelUpdate-selectRegion,
+  .TravelUpdate-selectSeason {
     gap: 65px;
   }
 
@@ -205,7 +227,8 @@ input:focus {
     gap: 65px !important;
   }
 
-  .TravelUpdate-selectCategory, .TravelUpdate-selectVehicle {
+  .TravelUpdate-selectCategory,
+  .TravelUpdate-selectVehicle {
     gap: 40px !important;
   }
 
@@ -215,7 +238,8 @@ input:focus {
     align-items: flex-start !important;
   }
 
-  .TravelUpdate-date-picker .TravelUpdate-date-StartDt, .TravelUpdate-date-picker .TravelUpdate-date-EndDt{
+  .TravelUpdate-date-picker .TravelUpdate-date-StartDt,
+  .TravelUpdate-date-picker .TravelUpdate-date-EndDt {
     display: flex;
     flex-direction: row;
     white-space: nowrap;
@@ -224,13 +248,12 @@ input:focus {
     gap: 22px;
   }
 
-
   .TravelUpdate-End {
     display: none;
   }
 
   .TravelUpdate_btn .TravelUpdate-handleSave {
-    width: 382px !important; 
+    width: 382px !important;
     height: 60px;
   }
 }

@@ -21,6 +21,7 @@
 
 .TravelInfo-content h2 {
   font-size: 30px;
+  margin: 10px 0 0 0;
 }
 
 .shareBtn {
@@ -64,11 +65,25 @@
   border-radius: 8px;
 }
 
+.TravelInfo-contents {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.bold {
+  font-family: 'Pretendard-SemiBold';
+}
+
+
 @media only screen and (min-width: 200px) and (max-width: 499px) {
 
   .TravelInfo-Mobile-header-none {
     display: none;
   }
+  
   .TravelInfo {
     padding: 10px 24px;
     display: flex;
@@ -103,5 +118,48 @@
     margin: 0;
     font-weight: 600;
     font-size: 22px;
+  }
+
+  .TravelInfo-content h2 {
+    font-size: 24px;
+    margin-top: 5px;
+    padding-bottom: 0;
+  }
+
+  .shareBtn {
+    margin-top: 10px;
+    padding-bottom: 3px;
+    font-size: 14px;
+    gap: 20px;
+  }
+
+  .TravelInfo-contents {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+  }
+
+  .TravelInfo-content-des {
+    margin-top: 25px;
+    gap: 25px;
+  }
+
+  .TravelInfo-des-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .TravelInfo-hashtags {
+    width: 100%;
+    display: flex;
+    justify-content:space-between;
+    margin-top: 0;
+    font-size: 14px;
+  }
+
+  .bold {
+    font-family: 'Pretendard-SemiBold';
   }
 }

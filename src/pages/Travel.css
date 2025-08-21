@@ -17,7 +17,21 @@
 .travel-list-btn {
   display: flex;
   justify-content: flex-end;
+  margin-right: -50px;
 }
+
+.travel-list-button-img {
+  display: inline;
+  width: 70px;
+  position: fixed;
+  bottom: 80px;
+  z-index: 1000;
+}
+
+.travel-list-button-img:hover {
+  opacity: 0.7;
+}
+
 
 @media only screen and (min-width: 500px) and (max-width: 1000px) {
 
@@ -30,7 +44,7 @@
 
   .Travel {
     padding: 0 24px;
-    margin-top: 40px;
+    margin-top: 0;
     gap: 30px;
   }
 
@@ -41,6 +55,22 @@
 
   .Travel-MobileHeader {
     display:inline;
+  }
+
+  .travel-list-button-img {
+    display: inline;
+    width: 50px;
+    position: fixed;
+    bottom: 20px;
+    z-index: 1000;
+  }
+
+  .travel-list-button-img:hover {
+    opacity: 0.7;
+  }
+
+  .travel-list-button {
+    display: none;
   }
 
 }

@@ -9,7 +9,32 @@ import { GoArrowLeft } from "react-icons/go";
 
 import dayjs from "dayjs";
 
-const TravelUpdate = () => {
+// 문자열/숫자/Date 모두 안전하게 Date 객체로 변환
+const toDate = (value) => {
+  if (!value) return null; // null, undefined
+  if (value instanceof Date) return value; // 이미 Date
+  if (typeof value === "number") return new Date(value); // timestamp
+  if (typeof value === "string") {
+    // yyyy-MM-dd 형식
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      const [y, m, d] = value.split("-").map(Number);
+      return new Date(y, m - 1, d);
+    }
+    // yyyyMMdd 형식
+    if (/^\d{8}$/.test(value)) {
+      const y = Number(value.slice(0, 4));
+      const m = Number(value.slice(4, 6));
+      const d = Number(value.slice(6, 8));
+      return new Date(y, m - 1, d);
+    }
+    // ISO 문자열 등 나머지
+    const parsed = Date.parse(value);
+    return isNaN(parsed) ? null : new Date(parsed);
+  }
+  return null; // 그 외 타입
+};
+
+const TravelUpdate = ({ onSave }) => {
   const { travelId } = useParams(); // travelId를 URL에서 받아옵니다.
   const navigate = useNavigate();
 
@@ -27,6 +52,45 @@ const TravelUpdate = () => {
   const [season, setSeason] = useState("");
   const [regUserId, setRegUserId] = useState(""); //eslint-disable-line no-unused-vars
   const [vehicle, setVehicle] = useState("");
+
+  const [placeName, setPlaceName] = useState("");
+  const [address, setAddress] = useState("");
+  const [lon, setLon] = useState("");
+  const [lat, setLat] = useState("");
+  const [openTime, setOpenTime] = useState("");
+  const [closeTime, setCloseTime] = useState("");
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [courseList, setCourseList] = useState([]);
+  const [currentCourse, setCurrentCourse] = useState({
+    place: "",
+    address: "",
+    opentime: "",
+  });
+
+  const handleAddClick = () => {
+    setIsEditing(true);
+    setCurrentCourse({ place: "", address: "", opentime: "" });
+  };
+
+  const handleSaveClick = () => {
+    const editList = [...courseList, currentCourse];
+    setCourseList(editList);
+    setIsEditing(false);
+    onSave(editList); // 상위 컴포넌트로 전달
+  };
+
+  const handleDelete = (index) => {
+    const editList = courseList.filter((_, i) => i !== index);
+    setCourseList(editList);
+    onSave(editList);
+  };
+
+  const handleEdit = (index) => {
+    setCurrentCourse(courseList[index]);
+    setIsEditing(true);
+    handleDelete(index); // 수정은 삭제 후 다시 추가하는 방식
+  };
 
   // 게시글이 변경될 때 상태 업데이트
   useEffect(() => {
@@ -46,8 +110,8 @@ const TravelUpdate = () => {
         setTitle(data.title);
         setContents(data.contents);
         setCostType(data.costType);
-        setTravelStartDt(new Date(data.travelStartDt));
-        setTravelEndDt(new Date(data.travelEndDt));
+        setTravelStartDt(toDate(data.travelStartDt));
+        setTravelEndDt(toDate(data.travelEndDt));
         setCategoryId(data.categoryId);
         setVehicle(data.vehicle);
         setSeason(data.season);
@@ -56,7 +120,30 @@ const TravelUpdate = () => {
       }
     };
 
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/travel/${travelId}/courses`
+        );
+        if (!response.ok) {
+          throw new Error("코스 정보를 불러올 수 없습니다.");
+        }
+        const data = await response.json();
+        setCourseList(data);
+
+        setPlaceName(data.placeName);
+        setAddress(data.address);
+        setLon(data.lon);
+        setLat(data.lat);
+        setOpenTime(data.openTime);
+        setCloseTime(data.closeTime);
+      } catch (error) {
+        console.error("코스 불러오기 실패:", error);
+      }
+    };
+
     fetchPost();
+    fetchCourses();
   }, [travelId]); // travelId가 변경될 때마다 호출
 
   // 저장 버튼 클릭 시 실행되는 함수
@@ -70,7 +157,13 @@ const TravelUpdate = () => {
       !costType ||
       !vehicle ||
       !travelStartDt ||
-      !travelEndDt
+      !travelEndDt ||
+      !placeName ||
+      !address ||
+      !lon ||
+      !lat ||
+      !openTime ||
+      !closeTime
     ) {
       alert("모든 필드를 입력해주세요!");
       return;
@@ -81,15 +174,25 @@ const TravelUpdate = () => {
 
     const updatedPost = {
       travelId,
-      region,
       title,
-      contents,
-      costType,
+      region,
+      season,
+      categoryId,
       travelStartDt: travelStartDtFormatted,
       travelEndDt: travelEndDtFormatted,
-      categoryId,
-      season,
+      costType,
       vehicle,
+      contents,
+    };
+
+    const CourseUpdatedPost = {
+      placeName,
+      address,
+      lon,
+      lat,
+      openTime,
+      closeTime,
+      regUserId,
     };
 
     try {
@@ -101,6 +204,28 @@ const TravelUpdate = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(updatedPost),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("네트워크 응답에 문제가 있습니다");
+      }
+
+      navigate(`/travelinfo/${travelId}`);
+      alert("수정되었습니다!");
+    } catch (error) {
+      error("수정 오류:", error);
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/travel/${travelId}/courses`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(CourseUpdatedPost),
         }
       );
 
@@ -217,7 +342,6 @@ const TravelUpdate = () => {
               onChange={(date) => setTravelStartDt(date)}
               selectsStart
               dateFormat="yyyy-MM-dd"
-              ClassName="wide-datepicker"
             />
           </div>
           <div className="TravelUpdate-date-EndDt">
@@ -228,7 +352,6 @@ const TravelUpdate = () => {
               selectsEnd
               minDate={travelStartDt}
               dateFormat="yyyy-MM-dd"
-              ClassName="wide-datepicker"
             />
           </div>
         </div>
@@ -270,13 +393,93 @@ const TravelUpdate = () => {
           </div>
         </div>
 
-        <div className="TravelUpdate-textarea">
-          <label>내용</label>
-          <textarea
-            placeholder="내용을 입력하세요"
-            value={contents}
-            onChange={(e) => setContents(e.target.value)}
-          />
+        <div className="TravelUpdate-textarea-content">
+          <div className="TravelUpdate-textarea">
+            <label>내용</label>
+            <textarea
+              value={contents}
+              onChange={(e) => setContents(e.target.value)}
+              placeholder="내용을 입력하세요."
+            ></textarea>
+          </div>{" "}
+          <div className="TravelUpdate-hashtags-text">
+            <p>* 해시태그는 최대 5개까지만 사용 가능합니다</p>
+          </div>
+        </div>
+
+        {/*코스등록*/}
+        <div className="TravelRegister-Course">
+          <div className="TravelRegister-CourseAdd">
+            {!isEditing && (
+              <button onClick={handleAddClick}>+ 코스 등록하기</button>
+            )}
+          </div>
+
+          {isEditing && (
+            <div className="CourseForm">
+              <div className="TravelRegister-courseButtons">
+                <p>코스 등록</p>
+                <div className="TravelRegister-courseButtons-btn">
+                  <Button
+                    text={"초기화"}
+                    type="secondary"
+                    onClick={() => setIsEditing(false)}
+                  />
+                  <Button
+                    onClick={handleSaveClick}
+                    text={"입력완료"}
+                    type="primary"
+                  />
+                </div>
+              </div>
+              <div className="CourseForm-place">
+                <label>장소명</label>
+                <input
+                  type="text"
+                  placeholder="장소명"
+                  value={placeName}
+                  onChange={(e) => setContents(e.target.placeName)}
+                />
+              </div>
+              <div className="CourseForm-address">
+                <label>주소</label>
+                <input
+                  type="text"
+                  placeholder="주소"
+                  value={address}
+                  onChange={(e) => setContents(e.target.address)}
+                />
+              </div>
+              <div className="CourseForm-time">
+                <label>영업시간</label>
+                <input
+                  type="text"
+                  placeholder="영업시간"
+                  value={openTime}
+                  onChange={(e) => setContents(e.target.openTime)}
+                />
+              </div>
+            </div>
+          )}
+
+          <ul className="CourseForm-Content">
+            {courseList.map((course, index) => (
+              <li key={index}>
+                <p className="course-number">
+                  코스 {String(index + 1).padStart(2, "0")}
+                </p>
+                <div className="CourseForm-Content-btn">
+                  <button onClick={() => handleDelete(index)}>삭제</button>
+                  <button
+                    className="CourseForm-EditBtn"
+                    onClick={() => handleEdit(index)}
+                  >
+                    수정
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* 버튼 */}

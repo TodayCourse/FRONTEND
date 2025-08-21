@@ -1,13 +1,12 @@
 import "./TravelInfo.css";
 
-import { useParams, useNavigate } from "react-router-dom";
-import Button from "../components/Button";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
 import { GoArrowLeft } from "react-icons/go";
-
 import dayjs from "dayjs";
+
+import { useParams, useNavigate } from "react-router-dom";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 // 지역
 const getRegionText = (region) => {
@@ -125,6 +124,7 @@ const TravelInfo = () => {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -146,6 +146,19 @@ const TravelInfo = () => {
 
     fetchPost(); // 게시글 가져오기 실행
   }, [travelId]);
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  // 리사이즈 핸들러 함수
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 499);
+  };
 
   if (loading) {
     return <h2>로딩 중...</h2>;
@@ -227,7 +240,7 @@ const TravelInfo = () => {
           <GoArrowLeft size="23" />
         </div>
         <div className="TravelInfo-Mobile-header-h2">
-          <h2>여행코스</h2>
+          <h2>코스여행</h2>
         </div>
       </div>
 
@@ -250,44 +263,67 @@ const TravelInfo = () => {
           </div>
 
           <div className="TravelInfo-content-des">
-            <p className="TravelInfo-des" style={{ justifyContent: "center" }}>
-              {removeHashtags(post.contents)}
-            </p>
+            <div className="TravelInfo-des-content">
+              <p
+                className="TravelInfo-des"
+                style={{ justifyContent: "center" }}
+              >
+                {removeHashtags(post.contents)}
+              </p>
 
-            <div className="TravelInfo-hashtags">
-              {extractHashtags(post.contents).map((tag, index) => (
-                <span key={index} className="hashtag">
-                  {tag}
-                </span>
-              ))}
+              <div className="TravelInfo-hashtags">
+                {extractHashtags(post.contents)
+                  .slice(0, isMobile ? 4 : 5)
+                  .map((tag, index) => (
+                    <span key={index} className="hashtag">
+                      {tag}
+                    </span>
+                  ))}
+              </div>
             </div>
 
-            <p className="TravelInfo-des">
-              여행기간
-              <span>
-                {dayjs(post.travelStartDt).format("YYYY-MM-DD")} ~{" "}
-                {dayjs(post.travelEndDt).format("YYYY-MM-DD")}
-              </span>
-            </p>
-            <p className="TravelInfo-des">
-              지역<span>{getRegionText(post.region)}</span>
-            </p>
-            <p className="TravelInfo-des">
-              계절 <span>{getSeasonText(post.season)}</span>
-            </p>
-            <p className="TravelInfo-des">
-              카테고리 <span>{getCategoryIdText(post.categoryId)}</span>
-            </p>
-            <p className="TravelInfo-des">
-              경비<span>{getCostTypeText(post.costType)}</span>
-            </p>
-            <p className="TravelInfo-des">
-              이동수단 <span>{getVehicleText(post.vehicle)}</span>
-            </p>
+            <div className="TravelInfo-contents">
+              <p className="TravelInfo-des">
+                <span className="bold">여행기간</span>
+                <span>
+                  {dayjs(post.travelStartDt).format("YYYY-MM-DD")} ~{" "}
+                  {dayjs(post.travelEndDt).format("YYYY-MM-DD")}
+                </span>
+              </p>
+              <p className="TravelInfo-des">
+                <span className="bold">지역</span>
+                <span>{getRegionText(post.region)}</span>
+              </p>
+              <p className="TravelInfo-des">
+                <span className="bold">계절</span>{" "}
+                <span>{getSeasonText(post.season)}</span>
+              </p>
+              <p className="TravelInfo-des">
+                <span className="bold">카테고리</span>{" "}
+                <span>{getCategoryIdText(post.categoryId)}</span>
+              </p>
+              <p className="TravelInfo-des">
+                <span className="bold">경비</span>
+                <span>{getCostTypeText(post.costType)}</span>
+              </p>
+              <p className="TravelInfo-des">
+                <span className="bold">이동수단</span>{" "}
+                <span>{getVehicleText(post.vehicle)}</span>
+              </p>
+            </div>
           </div>
+
+          {/* 코스 리스트 */}
+          <p className="TravelInfo-des">
+            <span className="bold">주소</span>
+            <span>{getRegionText(post.region)}</span>
+          </p>
+          <p className="TravelInfo-des">
+            <span className="bold">영업시간</span>
+            <span>{getRegionText(post.region)}</span>
+          </p>
         </div>
       </div>
-
       <Footer />
     </>
   );

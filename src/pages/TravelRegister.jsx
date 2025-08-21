@@ -10,10 +10,9 @@ import Header from "../components/Header";
 
 import dayjs from "dayjs";
 
-const TravelRegister = () => {
+const TravelRegister = ({ onSave }) => {
   const navigate = useNavigate();
 
-  const [error, setError] = useState(true); //eslint-disable-line no-unused-vars
   const [region, setRegion] = useState(""); // 지역 상태
   const [title, setTitle] = useState(""); // 제목 상태
   const [costType, setCostType] = useState(""); // 비용 상태
@@ -25,6 +24,55 @@ const TravelRegister = () => {
   const [contents, setContents] = useState(""); // 내용
   const [regUserId, setRegUserId] = useState(""); //eslint-disable-line no-unused-vars
   const [travelId, setTravelId] = useState(""); //eslint-disable-line no-unused-vars
+
+  const [placeName, setPlaceName] = useState(""); //eslint-disable-line no-unused-vars
+  const [address, setAddress] = useState(""); //eslint-disable-line no-unused-vars
+  const [lon, setLon] = useState(""); //eslint-disable-line no-unused-vars
+  const [lat, setLat] = useState(""); //eslint-disable-line no-unused-vars
+  const [openTime, setOpenTime] = useState(""); //eslint-disable-line no-unused-vars
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [courseList, setCourseList] = useState([]);
+  const [editingIndex, setEditingIndex] = useState(null); //eslint-disable-line no-unused-vars
+  const [currentCourse, setCurrentCourse] = useState({
+    place: "",
+    address: "",
+    opentime: "",
+  });
+
+  const handleAddClick = () => {
+    setIsEditing(true);
+    setCurrentCourse({ place: "", address: "", opentime: "" });
+  };
+
+  const handleSaveClick = () => {
+    let newList;
+    if (editingIndex !== null) {
+      // 수정 모드일 때
+      newList = [...courseList];
+      newList[editingIndex] = currentCourse;
+    } else {
+      // 새 코스 추가
+      newList = [...courseList, currentCourse];
+    }
+
+    setCourseList(newList);
+    setIsEditing(false);
+    setEditingIndex(null); // 수정 모드 해제
+    onSave(newList);
+  };
+
+  const handleDelete = (index) => {
+    const newList = courseList.filter((_, i) => i !== index);
+    setCourseList(newList);
+    onSave(newList);
+  };
+
+  const handleEdit = (index) => {
+    setCurrentCourse(courseList[index]);
+    setIsEditing(true);
+    setEditingIndex(index); // 수정 중인 코스 인덱스를 따로 저장
+  };
 
   const handleSave = async () => {
     if (
@@ -47,19 +95,19 @@ const TravelRegister = () => {
 
     const newPost = {
       regUserId: null,
-      travelId,
       title,
-      contents,
       region,
       season,
       categoryId,
-      costType,
-      vehicle,
       travelStartDt: travelStartDtFormatted,
       travelEndDt: travelEndDtFormatted,
+      costType,
+      vehicle,
+      contents,
     };
 
     try {
+      // 여행 정보 먼저 저장
       const response = await fetch("http://localhost:8080/api/travel/create", {
         method: "POST",
         headers: {
@@ -72,9 +120,36 @@ const TravelRegister = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
+      // 코스 정보 일괄 저장
+      const coursePosts = courseList.map((course) => ({
+        placeName: course.place,
+        address: course.address,
+        openTime: course.opentime,
+        lon: "", // 필요하면 실제 값으로 변경
+        lat: "",
+        regUserId: null,
+      }));
+
+      for (const course of coursePosts) {
+        const courseResponse = await fetch(
+          `http://localhost:8080/api/travel/${travelId}/courses`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(course),
+          }
+        );
+
+        if (!courseResponse.ok) {
+          throw new Error(`HTTP error! Status: ${courseResponse.status}`);
+        }
+      }
+
       navigate("/travel");
-    } catch {
-      console.error("에러 발생:", error);
+    } catch (e) {
+      console.error("에러 발생:", e);
     }
   };
 
@@ -84,6 +159,11 @@ const TravelRegister = () => {
 
   const MobileGoArrowLeft = () => {
     navigate("/travel");
+  };
+
+  const handleCloseBottomSheet = () => {
+    setIsEditing(false);
+    setEditingIndex(null); // 수정 상태도 초기화
   };
 
   return (
@@ -224,7 +304,7 @@ const TravelRegister = () => {
               onChange={(e) => setVehicle(e.target.value)}
             >
               <option value="" disabled>
-                비용을 선택해주세요.
+                이동수단을 선택해주세요.
               </option>
               <option value="PUBLIC_TRANSPORT">대중교통</option>
               <option value="CAR">자동차</option>
@@ -235,14 +315,134 @@ const TravelRegister = () => {
           </div>
         </div>
 
-        <div className="TravelRegister-textarea">
-          <label>내용</label>
-          <textarea
-            value={contents}
-            onChange={(e) => setContents(e.target.value)}
-            placeholder="내용을 입력하세요."
-          ></textarea>
+        <div className="TravelRegister-textarea-content">
+          <div className="TravelRegister-textarea">
+            <label>내용</label>
+            <textarea
+              value={contents}
+              onChange={(e) => setContents(e.target.value)}
+              placeholder="내용을 입력하세요."
+            ></textarea>
+          </div>{" "}
+          <div className="TravelRegister-hashtags-text">
+            <p>* 해시태그는 최대 5개까지만 사용 가능합니다</p>
+          </div>
         </div>
+
+        <div className="mobile-background"></div>
+
+        {/*코스등록*/}
+        <div className="TravelRegister-Course">
+          {courseList.length > 0 && (
+            <ul className="CourseForm-Content">
+              {courseList.map((course, index) => (
+                <li key={index}>
+                  <p className="course-number">
+                    코스 {String(index + 1).padStart(2, "0")}
+                  </p>
+                  <div className="CourseForm-Content-btn">
+                    <button onClick={() => handleDelete(index)}>삭제</button>
+                    <button
+                      className="CourseForm-EditBtn"
+                      onClick={() => handleEdit(index)}
+                    >
+                      수정
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className="TravelRegister-CourseAdd">
+            {!isEditing && (
+              <button onClick={handleAddClick}>+ 코스 등록하기</button>
+            )}
+          </div>
+
+          {isEditing && (
+            <div className="CourseForm">
+              <div className="TravelRegister-courseButtons">
+                <p>코스 등록</p>
+                <button
+                  className="bottom-sheet-header-closeBtn"
+                  onClick={handleCloseBottomSheet}
+                >
+                  X
+                </button>
+                <div className="TravelRegister-courseButtons-btn">
+                  <Button
+                    text={"초기화"}
+                    type="secondary"
+                    onClick={() => setIsEditing(false)}
+                  />
+                  <Button
+                    onClick={handleSaveClick}
+                    text={"입력완료"}
+                    type="primary"
+                  />
+                </div>
+              </div>
+              <div className="TravelRegisterContent">
+                <div className="CourseForm-place">
+                  <label>장소명</label>
+                  <input
+                    type="text"
+                    placeholder="장소명"
+                    value={currentCourse.place}
+                    onChange={(e) =>
+                      setCurrentCourse({
+                        ...currentCourse,
+                        place: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="CourseForm-address">
+                  <label>주소</label>
+                  <input
+                    type="text"
+                    placeholder="주소"
+                    value={currentCourse.address}
+                    onChange={(e) =>
+                      setCurrentCourse({
+                        ...currentCourse,
+                        address: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="CourseForm-time">
+                  <label>영업시간</label>
+                  <input
+                    type="text"
+                    placeholder="ex. 9시 ~ 20시"
+                    value={currentCourse.opentime}
+                    onChange={(e) =>
+                      setCurrentCourse({
+                        ...currentCourse,
+                        opentime: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+              </div>
+              <div className="TravelRegister-courseButtons-mobilebtn">
+                <Button
+                  text={"초기화"}
+                  type="secondary"
+                  onClick={() => setIsEditing(false)}
+                />
+                <Button
+                  onClick={handleSaveClick}
+                  text={"입력완료"}
+                  type="primary"
+                />
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="mobile-background"></div>
 
         <div className="TravelRegister_btn">
           <Button
