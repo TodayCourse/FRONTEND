@@ -5,7 +5,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import RecommendList from "../components/RecommendList";
 import Slide from "../components/Slide";
-import Category from "../components/category";
+import Category from "../components/Category";
 
 const Home = () => {
   const slides = [
