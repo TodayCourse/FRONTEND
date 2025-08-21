@@ -1,0 +1,236 @@
+.RecommendList {
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  position: relative;
+  margin: -250px 125px 200px 125px;
+}
+
+.RecommendList-text {
+  margin-left: 25px;
+}
+
+.RecommendList-text p {
+  font-size: 18px;
+}
+
+.RecommendList-title {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.RecommendList-items {
+  display: flex;
+  justify-content: space-between;
+  transition: transform 0.4s ease-in-out;
+  list-style: none;
+  padding: 25px;
+  margin: 0;
+  gap: 0;
+}
+
+.RecommendList-item {
+  flex: 0 0;
+  box-sizing: border-box;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.RecommendList-item:last-child {
+  padding-right: 0;
+}
+
+.RecommendList-img-wrapper {
+  position: relative;
+  width: 330px;
+  height: 430px;
+}
+
+.RecommendList-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+  position: absolute;
+}
+
+.RecommendList-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  color: white;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.RecommendList-overlay .RecommendList-region {
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 5px 10px;
+  font-size: 14px;
+  justify-content: center;
+  border-radius: 5px;
+  width: fit-content;
+}
+
+.RecommendList-overlay .RecommendList-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.RecommendList-overlay h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.RecommendList-overlay p {
+  margin: 4px 0 0;
+  font-size: 14px;
+}
+
+.carousel-container {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 60%;
+  transform: translateY(-130%);
+  font-size: 30px;
+  font-weight: 400;
+  width: 50px;
+  height: 50px;
+  background: #fff;
+  color: #000;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 8px gray;
+  padding-bottom: 5px;
+}
+
+.carousel-btn.prev {
+  left: 5px; /* 왼쪽 카드 바로 옆 */
+}
+
+.carousel-btn.next {
+  right: 5px; /* 오른쪽 카드 바로 옆 */
+}
+
+.carousel-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+@media only screen and (min-width: 200px) and (max-width: 499px) {
+  .RecommendList {
+    margin-top: 20px;
+    overflow-x: auto;
+  }
+
+  .RecommendList-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .RecommendList-items {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    list-style: none;
+    scroll-snap-type: x mandatory;
+  }
+
+  .RecommendList-item {
+    flex: 0 0 auto;
+    width: 160px;
+    height: 200px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    scroll-snap-align: start;
+  }
+
+  .RecommendList-items {
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .RecommendList-items::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+
+  .RecommendList-img-wrapper {
+    position: relative;
+    width: 100%;
+    height: 200px;
+  }
+
+  .RecommendList-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .RecommendList-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+    /* background: rgba(0, 0, 0, 0.5); */
+    color: white;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px;
+  }
+
+  .RecommendList-overlay .RecommendList-region {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 5px 10px;
+    font-size: 12px;
+    justify-content: center;
+    border-radius: 5px;
+    width: fit-content;
+  }
+
+  .RecommendList-overlay .RecommendList-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .RecommendList-overlay h4 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .RecommendList-overlay p {
+    margin: 4px 0 0;
+    font-size: 12px;
+  }
+}

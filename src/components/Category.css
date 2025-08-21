@@ -1,0 +1,17 @@
+.Category {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 50px 0;
+}
+
+.Category img {
+  width: 130px;
+}
+
+.Category .Category-contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
