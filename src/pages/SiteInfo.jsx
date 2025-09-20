@@ -103,62 +103,38 @@ const SiteInfo = () => {
         </div>
       </div>
       <div className="Suggest">
-        <div>
-          <div className="Suggest-title">
-            <div className="Suggest-title-text">
-              <div className="Suggest-title-left">
-                <p className="Suggest-title-left__label">오늘의코스</p>
-                <div className="Suggest-title-left__hr"></div>
+        <div className="Suggest_bg">
+          <div>
+            <div className="Suggest-title">
+              <div className="Suggest-title-text">
+                <div className="Suggest-title-left">
+                  <p className="Suggest-title-left__label">오늘의코스</p>
+                  <div className="Suggest-title-left__hr"></div>
+                </div>
+                <img src={nextb} />
               </div>
-              <img src={nextb} />
+              <h2>
+                오늘의 코스,
+                <br />
+                이런 분들에게 추천합니다
+              </h2>
+              <p>
+                계획은 간단하게, 추억은 오래도록
+                <br />
+                남기고 싶은 분들에게 딱 맞는 플랫폼입니다.
+              </p>
             </div>
-            <h2>
-              오늘의 코스,
-              <br />
-              이런 분들에게 추천합니다
-            </h2>
-            <p>
-              계획은 간단하게, 추억은 오래도록
-              <br />
-              남기고 싶은 분들에게 딱 맞는 플랫폼입니다.
-            </p>
-          </div>
-          <div className="Suggest-contents">
-            <div className="Suggest-contents-list">
-              <p>여행은 가고 싶은데 어디 갈지 고민되시는 분</p>
-              <p>친구·연인과 여행 코스를 공유하고 싶으신 분</p>
-              <p>특별한 여행 코스가 필요하신 분</p>
+            <div className="Suggest-contents">
+              <div className="Suggest-contents-list">
+                <p>여행은 가고 싶은데 어디 갈지 고민되시는 분</p>
+                <p>친구·연인과 여행 코스를 공유하고 싶으신 분</p>
+                <p>특별한 여행 코스가 필요하신 분</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="Suggest-image">
-          <img src={image} />
-        </div>
-      </div>
-      <div className="Move">
-        <div className="Move-card">
-          <h3 className="Move-card__title">지원 프로그램</h3>
-          <p className="Move-card__desc">
-            다양한 프로그램을 통해
-            <br />
-            성공적인 DX와 비즈니스 혁신을 지원합니다.
-          </p>
-        </div>
-        <div className="Move-card">
-          <h3 className="Move-card__title">지원 프로그램</h3>
-          <p className="Move-card__desc">
-            다양한 프로그램을 통해
-            <br />
-            성공적인 DX와 비즈니스 혁신을 지원합니다.
-          </p>
-        </div>
-        <div className="Move-card">
-          <h3 className="Move-card__title">지원 프로그램</h3>
-          <p className="Move-card__desc">
-            다양한 프로그램을 통해
-            <br />
-            성공적인 DX와 비즈니스 혁신을 지원합니다.
-          </p>
+          <div className="Suggest-image">
+            <img src={image} />
+          </div>
         </div>
       </div>
       <Footer />
