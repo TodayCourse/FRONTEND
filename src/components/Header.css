@@ -4,11 +4,13 @@ body {
 }
 
 .menu {
-  padding: 30px 150px;
-  display:flex;
+  padding: 30px 0;
+  display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid var(--gray-color-20);
   align-items: center;
+  background-color: transparent;
+  max-width: 1330px;
+  margin: 0 auto;
 }
 
 .nav {
@@ -20,14 +22,14 @@ body {
 .nav a {
   color: inherit;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 18px;
   padding: 10px 20px;
   display: inline-block;
   text-align: center;
 }
 
-.nav a:hover{
-  background-color: white;
+.nav a:hover {
+  background-color: transparent;
   color: var(--main-color);
 }
 
@@ -41,7 +43,7 @@ body {
   height: 36px;
 }
 
-.logo img{
+.logo img {
   max-width: 150px;
   height: auto;
   width: 100%;
@@ -62,7 +64,7 @@ body {
   padding: 0 12px;
   height: 43px;
   margin-right: 10px;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .login-btn button:hover {
@@ -70,7 +72,7 @@ body {
   background-color: var(--gray-color-10);
 }
 
-.header-menu-btn { 
+.header-menu-btn {
   width: 23px;
   height: 23px;
   padding: 10px;
@@ -83,7 +85,6 @@ body {
 
 .menu-btn {
   display: flex;
-  
 }
 
 .dropdown-menu {
@@ -159,6 +160,24 @@ hr {
   cursor: pointer;
 }
 
+/* 색상 변경 */
+.menu-dark {
+  color: white;
+}
+
+.menu-dark .nav a:hover {
+  color: #fff;
+}
+
+.menu-dark .login-btn button {
+  background-color: transparent;
+  color: #fff;
+}
+
+.HeaderHr {
+  border-bottom: 1px solid var(--gray-color-20);
+}
+
 /* 모바일 (휴대폰, 태블릿 세로) */
 @media only screen and (min-width: 200px) and (max-width: 1000px) {
   body {
@@ -166,7 +185,7 @@ hr {
   }
 
   .menu {
-    padding: 10px 24px;
+    padding: 15px 24px;
   }
 
   .nav {
@@ -177,7 +196,7 @@ hr {
     display: none;
   }
 
-  .logo img{
+  .logo img {
     width: 130px;
     margin: 0;
   }

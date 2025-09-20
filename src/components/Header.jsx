@@ -5,7 +5,7 @@ import "./Header.css";
 import logo from "../assets/images/logo.png";
 import { FiMenu } from "react-icons/fi";
 
-function Header() {
+function Header({ variant = "default" }) {
   const nav = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null); // 메뉴 참조
@@ -40,7 +40,9 @@ function Header() {
 
   return (
     <>
-      <div className="menu">
+      <div
+        className={`menu ${variant === "dark" ? "menu-dark" : "menu-default"}`}
+      >
         <div className="logo">
           <Link to={"/"}>
             <img src={logo} alt="로고" />
@@ -61,9 +63,15 @@ function Header() {
           </div>
         </div>
       </div>
+      <div className="HeaderHr"></div>
 
       {showMenu && (
-        <div className="dropdown-menu" ref={menuRef}>
+        <div
+          className={`dropdown-menu ${
+            variant === "dark" ? "dropdown-dark" : ""
+          }`}
+          ref={menuRef}
+        >
           <ul>
             <div className="header-dropdown-login">
               <button onClick={onClickButton}>로그인/회원가입</button>
@@ -84,7 +92,7 @@ function Header() {
             <li>
               <Link to="/info">여행정보</Link>
             </li>
-            <div className="header-hr">
+            {/* <div className="header-hr">
               <hr />
             </div>
             <li>
@@ -92,7 +100,7 @@ function Header() {
             </li>
             <li>
               <Link to="#">고객센터</Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       )}
