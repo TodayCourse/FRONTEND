@@ -1,15 +1,23 @@
 .Category {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  max-width: 1330px;
+}
+
+.CategoryItem {
   display: flex;
   justify-content: center;
-  gap: 30px;
+  justify-content: space-between;
   margin: 50px 0;
+  width: 100%;
 }
 
-.Category img {
-  width: 130px;
+.CategoryItem img {
+  width: 60px;
 }
 
-.Category .Category-contents {
+.CategoryItem .Category-contents {
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -53,7 +53,7 @@ const Slide = ({ slides = [], interval = 10000 }) => {
     <div className="slider">
       {slides.map((slide, index) => (
         <div
-          className={index === current ? "slide active" : "slide"}
+          className={index === current ? "slideActive" : "slide"}
           key={index}
         >
           {index === current && (

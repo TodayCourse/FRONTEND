@@ -11,8 +11,8 @@ import cycling from "../assets/images/cycling.png";
 
 function Category() {
   return (
-    <div>
-      <div className="Category">
+    <div className="Category">
+      <div className="CategoryItem">
         <div className="Category-contents">
           <img src={family} />
           <p>가족여행</p>

@@ -5,15 +5,16 @@ import image from "../assets/images/image.png";
 import dayjs from "dayjs";
 
 const RecommendList = () => {
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
   const [recommendList, setRecommendList] = useState([]);
   const [page, setPage] = useState(0);
-  const ITEMS_PER_PAGE = 4;
+  const ITEMS_PER_PAGE = 3;
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRecommendList = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/travel");
+        const response = await fetch(`${API_BASE_URL}/api/travel`);
         const data = await response.json();
 
         const sorted = data

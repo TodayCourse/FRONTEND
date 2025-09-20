@@ -36,9 +36,11 @@ const Home = () => {
     <div>
       <Header />
       <Slide slides={slides} />
-      <Category />
+      <div className="HomeCategory">
+        <Category />
+      </div>
       <div className="Home">
-        <div className="Home-Section">
+        <div className="HomeSection">
           <h3>오늘의 추천 코스</h3>
           <p>매일 새롭게 추천되는 여행 코스를 확인해보세요</p>
         </div>

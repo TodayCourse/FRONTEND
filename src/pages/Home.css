@@ -1,20 +1,37 @@
-.Home {
-  padding: 50px 125px 0 125px;
-  background-color: var(--main-color);
-  height: 350px;
+.HomeCategory {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-.Home-Section {
+.Home {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 0; /* 좌우 중앙 정렬 */
+  padding: 80px 0 0 0; /* 화면이 넓을 때 여백 확보 */
+  max-width: 100%;
+  background-color: var(--main-color);
+  height: 260px;
+}
+
+.HomeSection {
   color: #fff;
   margin-left: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin: 0; /* 좌우 중앙 정렬 */
+  max-width: 1330px;
 }
 
-.Home-Section h3 {
+.HomeSection h3 {
   font-size: 30px;
   font-weight: 600;
 }
 
-.Home-Section p {
+.HomeSection p {
   font-size: 18px;
 }
 
@@ -29,7 +46,7 @@
     z-index: 99;
   }
 
-  .Home-Section {
+  .HomeSection {
     padding: 25px;
   }
 }
