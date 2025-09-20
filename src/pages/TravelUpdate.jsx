@@ -34,7 +34,8 @@ const toDate = (value) => {
   return null; // 그 외 타입
 };
 
-const TravelUpdate = ({ onSave }) => {
+const TravelUpdate = () => {
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
   const { travelId } = useParams(); // travelId를 URL에서 받아옵니다.
   const navigate = useNavigate();
 
@@ -53,52 +54,50 @@ const TravelUpdate = ({ onSave }) => {
   const [regUserId, setRegUserId] = useState(""); //eslint-disable-line no-unused-vars
   const [vehicle, setVehicle] = useState("");
 
-  const [placeName, setPlaceName] = useState("");
-  const [address, setAddress] = useState("");
-  const [lon, setLon] = useState("");
-  const [lat, setLat] = useState("");
-  const [openTime, setOpenTime] = useState("");
-  const [closeTime, setCloseTime] = useState("");
+  // const [placeName, setPlaceName] = useState("");
+  // const [address, setAddress] = useState("");
+  // const [lon, setLon] = useState("");
+  // const [lat, setLat] = useState("");
+  // const [openTime, setOpenTime] = useState("");
+  // const [closeTime, setCloseTime] = useState("");
 
-  const [isEditing, setIsEditing] = useState(false);
-  const [courseList, setCourseList] = useState([]);
-  const [currentCourse, setCurrentCourse] = useState({
-    place: "",
-    address: "",
-    opentime: "",
-  });
+  // const [isEditing, setIsEditing] = useState(false);
+  // const [courseList, setCourseList] = useState([]);
+  // const [currentCourse, setCurrentCourse] = useState({
+  //   place: "",
+  //   address: "",
+  //   opentime: "",
+  // });
 
-  const handleAddClick = () => {
-    setIsEditing(true);
-    setCurrentCourse({ place: "", address: "", opentime: "" });
-  };
+  // const handleAddClick = () => {
+  //   setIsEditing(true);
+  //   setCurrentCourse({ place: "", address: "", opentime: "" });
+  // };
 
-  const handleSaveClick = () => {
-    const editList = [...courseList, currentCourse];
-    setCourseList(editList);
-    setIsEditing(false);
-    onSave(editList); // 상위 컴포넌트로 전달
-  };
+  // const handleSaveClick = () => {
+  //   const editList = [...courseList, currentCourse];
+  //   setCourseList(editList);
+  //   setIsEditing(false);
+  //   onSave(editList); // 상위 컴포넌트로 전달
+  // };
 
-  const handleDelete = (index) => {
-    const editList = courseList.filter((_, i) => i !== index);
-    setCourseList(editList);
-    onSave(editList);
-  };
+  // const handleDelete = (index) => {
+  //   const editList = courseList.filter((_, i) => i !== index);
+  //   setCourseList(editList);
+  //   onSave(editList);
+  // };
 
-  const handleEdit = (index) => {
-    setCurrentCourse(courseList[index]);
-    setIsEditing(true);
-    handleDelete(index); // 수정은 삭제 후 다시 추가하는 방식
-  };
+  // const handleEdit = (index) => {
+  //   setCurrentCourse(courseList[index]);
+  //   setIsEditing(true);
+  //   handleDelete(index); // 수정은 삭제 후 다시 추가하는 방식
+  // };
 
   // 게시글이 변경될 때 상태 업데이트
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:8080/api/travel/${travelId}`
-        );
+        const response = await fetch(`${API_BASE_URL}/api/travel/${travelId}`);
         if (!response.ok) {
           throw new Error("게시글을 찾을 수 없습니다.");
         }
@@ -120,30 +119,30 @@ const TravelUpdate = ({ onSave }) => {
       }
     };
 
-    const fetchCourses = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8080/api/travel/${travelId}/courses`
-        );
-        if (!response.ok) {
-          throw new Error("코스 정보를 불러올 수 없습니다.");
-        }
-        const data = await response.json();
-        setCourseList(data);
+    // const fetchCourses = async () => {
+    //   try {
+    //     const response = await fetch(
+    //       `http://ec2-13-125-45-77.ap-northeast-2.compute.amazonaws.com:8080/api/travel/${travelId}/courses`
+    //     );
+    //     if (!response.ok) {
+    //       throw new Error("코스 정보를 불러올 수 없습니다.");
+    //     }
+    //     const data = await response.json();
+    //     setCourseList(data);
 
-        setPlaceName(data.placeName);
-        setAddress(data.address);
-        setLon(data.lon);
-        setLat(data.lat);
-        setOpenTime(data.openTime);
-        setCloseTime(data.closeTime);
-      } catch (error) {
-        console.error("코스 불러오기 실패:", error);
-      }
-    };
+    //     setPlaceName(data.placeName);
+    //     setAddress(data.address);
+    //     setLon(data.lon);
+    //     setLat(data.lat);
+    //     setOpenTime(data.openTime);
+    //     setCloseTime(data.closeTime);
+    //   } catch (error) {
+    //     console.error("코스 불러오기 실패:", error);
+    //   }
+    // };
 
     fetchPost();
-    fetchCourses();
+    // fetchCourses();
   }, [travelId]); // travelId가 변경될 때마다 호출
 
   // 저장 버튼 클릭 시 실행되는 함수
@@ -157,13 +156,14 @@ const TravelUpdate = ({ onSave }) => {
       !costType ||
       !vehicle ||
       !travelStartDt ||
-      !travelEndDt ||
-      !placeName ||
-      !address ||
-      !lon ||
-      !lat ||
-      !openTime ||
-      !closeTime
+      !travelEndDt
+
+      // !placeName ||
+      // !address ||
+      // !lon ||
+      // !lat ||
+      // !openTime ||
+      // !closeTime
     ) {
       alert("모든 필드를 입력해주세요!");
       return;
@@ -185,49 +185,24 @@ const TravelUpdate = ({ onSave }) => {
       contents,
     };
 
-    const CourseUpdatedPost = {
-      placeName,
-      address,
-      lon,
-      lat,
-      openTime,
-      closeTime,
-      regUserId,
-    };
+    // const CourseUpdatedPost = {
+    //   placeName,
+    //   address,
+    //   lon,
+    //   lat,
+    //   openTime,
+    //   closeTime,
+    //   regUserId,
+    // };
 
     try {
-      const response = await fetch(
-        `http://localhost:8080/api/travel/${travelId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedPost),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("네트워크 응답에 문제가 있습니다");
-      }
-
-      navigate(`/travelinfo/${travelId}`);
-      alert("수정되었습니다!");
-    } catch (error) {
-      error("수정 오류:", error);
-    }
-
-    try {
-      const response = await fetch(
-        `http://localhost:8080/api/travel/${travelId}/courses`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(CourseUpdatedPost),
-        }
-      );
+      const response = await fetch(`${API_BASE_URL}/api/travel/${travelId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedPost),
+      });
 
       if (!response.ok) {
         throw new Error("네트워크 응답에 문제가 있습니다");
@@ -325,12 +300,12 @@ const TravelUpdate = ({ onSave }) => {
             </option>
             <option value="1">가족여행</option>
             <option value="2">드라이브</option>
-            <option value="camp">캠핑</option>
-            <option value="tracking">트래킹</option>
-            <option value="eat">맛집투어</option>
-            <option value="leisure">레저여행</option>
-            <option value="couple">데이트</option>
-            <option value="bike">자전거여행</option>
+            <option value="3">캠핑</option>
+            <option value="4">트래킹</option>
+            <option value="5">맛집투어</option>
+            <option value="6">레저여행</option>
+            <option value="7">데이트</option>
+            <option value="8">자전거여행</option>
           </select>
         </div>
 
@@ -407,7 +382,7 @@ const TravelUpdate = ({ onSave }) => {
           </div>
         </div>
 
-        {/*코스등록*/}
+        {/* 코스등록
         <div className="TravelRegister-Course">
           <div className="TravelRegister-CourseAdd">
             {!isEditing && (
@@ -480,7 +455,7 @@ const TravelUpdate = ({ onSave }) => {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
 
         {/* 버튼 */}
         <div className="TravelUpdate_btn">

@@ -66,7 +66,7 @@ const getCostTypeText = (costType) => {
     case "OVER_500K":
       return "50만원 이상";
     default:
-      return "알 수 없음"; // 기본값을 알 수 없음으로 설정
+      return "알 수 없음";
   }
 };
 
@@ -75,15 +75,15 @@ const getCategoryIdText = (categoryId) => {
   const categoryIdMap = {
     1: "가족여행",
     2: "드라이브",
-    camp: "캠핑",
-    tracking: "트래킹",
-    eat: "맛집투어",
-    leisure: "레저여행",
-    couple: "데이트",
-    bike: "자전거여행",
+    3: "캠핑",
+    4: "트래킹",
+    5: "맛집투어",
+    6: "레저여행",
+    7: "데이트",
+    8: "자전거여행",
   };
 
-  return categoryIdMap[categoryId] || "알 수 없음"; // 해당 카테고리가 없으면 "알 수 없음" 반환
+  return categoryIdMap[categoryId] || "알 수 없음";
 };
 
 const getVehicleText = (vehicle) => {
@@ -99,7 +99,7 @@ const getVehicleText = (vehicle) => {
     case "BICYCLE":
       return "자전거";
     default:
-      return "알 수 없음"; // 기본값을 알 수 없음으로 설정
+      return "알 수 없음";
   }
 };
 
@@ -114,14 +114,15 @@ const getSeasonText = (season) => {
     case "WINTER":
       return "겨울";
     default:
-      return "알 수 없음"; // 기본값을 알 수 없음으로 설정
+      return "알 수 없음";
   }
 };
 
 const TravelInfo = () => {
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
   const { travelId } = useParams();
   const navigate = useNavigate();
-  const [post, setPost] = useState(null);
+  const [post, setPost] = useState(location.state?.post || null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -129,14 +130,13 @@ const TravelInfo = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:8080/api/travel/${travelId}`
-        );
+        const response = await fetch(`${API_BASE_URL}/api/travel/${travelId}`);
         if (!response.ok) {
           throw new Error("게시글을 찾을 수 없습니다.");
         }
         const data = await response.json();
-        setPost(data); // 데이터 저장
+
+        setPost(data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -144,7 +144,7 @@ const TravelInfo = () => {
       }
     };
 
-    fetchPost(); // 게시글 가져오기 실행
+    fetchPost();
   }, [travelId]);
 
   useEffect(() => {
@@ -155,38 +155,26 @@ const TravelInfo = () => {
     };
   }, []);
 
-  // 리사이즈 핸들러 함수
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 499);
   };
 
-  if (loading) {
-    return <h2>로딩 중...</h2>;
-  }
-
-  if (error) {
-    return <h2>{error}</h2>;
-  }
-
-  if (!post) {
-    return <h2>게시글을 찾을 수 없습니다.</h2>;
-  }
+  if (loading) return <h2>로딩 중...</h2>;
+  if (error) return <h2>{error}</h2>;
+  if (!post) return <h2>게시글을 찾을 수 없습니다.</h2>;
 
   // 삭제 버튼 클릭 시
   const handleDelete = async () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       try {
-        const response = await fetch(
-          `http://localhost:8080/api/travel/${travelId}`,
-          {
-            method: "DELETE",
-          }
-        );
+        const response = await fetch(`${API_BASE_URL}/api/travel/${travelId}`, {
+          method: "DELETE",
+        });
 
         if (!response.ok) throw new Error("삭제에 실패했습니다.");
 
         alert("삭제되었습니다.");
-        navigate("/Travel"); // 삭제 후 목록으로 이동
+        navigate("/Travel");
       } catch (err) {
         alert(err.message);
       }
@@ -195,33 +183,26 @@ const TravelInfo = () => {
 
   // 수정 버튼 클릭 시
   const handleUpdate = () => {
-    navigate(`/travelupdate/${travelId}`); // 수정 페이지로 이동
+    navigate(`/travelupdate/${travelId}`);
   };
 
   const MobileGoArrowLeft = () => {
     navigate("/Travel");
   };
 
-  // 여행 일정 텍스트 반환
   const getTripDurationText = (startDate, endDate) => {
     const start = dayjs(startDate);
     const end = dayjs(endDate);
     const diffDays = end.diff(start, "day");
 
-    if (diffDays === 0) {
-      return "당일치기";
-    } else {
-      return `${diffDays}박 ${diffDays + 1}일`;
-    }
+    return diffDays === 0 ? "당일치기" : `${diffDays}박 ${diffDays + 1}일`;
   };
 
-  // 해시태그 추출: #기호는 제거해서 리턴
   const extractHashtags = (text) => {
     const matches = text.match(/#[^\s#]+/g);
     return matches ? matches.map((tag) => tag.slice(1)) : [];
   };
 
-  // 해시태그 제거한 본문 텍스트
   const removeHashtags = (text) => {
     return text.replace(/#[^\s#]+/g, "").trim();
   };
@@ -246,7 +227,7 @@ const TravelInfo = () => {
 
       <div className="TravelInfo">
         <div className="TravelInfo-content">
-          {/* 지역과 기간을 텍스트로 변환하여 표시 */}
+          {/* 지역과 기간 */}
           <p>
             {getRegionText(post.region)}&nbsp;|&nbsp;
             {getTripDurationText(post.travelStartDt, post.travelEndDt)}
@@ -313,15 +294,30 @@ const TravelInfo = () => {
             </div>
           </div>
 
-          {/* 코스 리스트 */}
-          <p className="TravelInfo-des">
-            <span className="bold">주소</span>
-            <span>{getRegionText(post.region)}</span>
-          </p>
-          <p className="TravelInfo-des">
-            <span className="bold">영업시간</span>
-            <span>{getRegionText(post.region)}</span>
-          </p>
+          {/* 장소 목록 */}
+          <div className="TravelCourse">
+            <span className="bold">장소</span>
+            {post.courseList && post.courseList.length > 0 ? (
+              <ul>
+                {post.courseList.map((place, idx) => (
+                  <li key={idx}>
+                    <p>
+                      <span className="bold">장소명:</span> {place.placeName}
+                    </p>
+                    <p>
+                      <span className="bold">주소:</span> {place.address}
+                    </p>
+                    <p>
+                      <span className="bold">영업시간:</span> {place.openTime} ~{" "}
+                      {place.closeTime}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>등록된 장소가 없습니다.</p>
+            )}
+          </div>
         </div>
       </div>
       <Footer />

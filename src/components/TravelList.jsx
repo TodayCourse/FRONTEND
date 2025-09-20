@@ -10,6 +10,7 @@ const TravelList = ({
   limit = null,
   sortOrder: externalSortOrder,
 }) => {
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
   const [travelList, setTravelList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -31,7 +32,7 @@ const TravelList = ({
 
   const fetchTravelList = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/travel");
+      const response = await fetch(`${API_BASE_URL}/api/travel`);
       if (!response.ok) throw new Error("데이터를 가져오는 데 실패했습니다.");
       const data = await response.json();
 

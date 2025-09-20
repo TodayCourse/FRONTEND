@@ -1,26 +1,22 @@
 .Travel-MobileHeader {
-    display:none;
-  }
+  display: none;
+}
 
 .Travel {
   display: flex;
-  justify-content:flex-start;
+  justify-content: flex-start;
   margin-top: 60px;
   padding: 0 150px;
   flex-direction: column;
 }
 
-.Button_1 {
-  margin-top: 40px;
-}
-
-.travel-list-btn {
+.Add {
   display: flex;
   justify-content: flex-end;
   margin-right: -50px;
 }
 
-.travel-list-button-img {
+.Add__img {
   display: inline;
   width: 70px;
   position: fixed;
@@ -28,36 +24,33 @@
   z-index: 1000;
 }
 
-.travel-list-button-img:hover {
+.Add__img:hover {
   opacity: 0.7;
 }
 
-
 @media only screen and (min-width: 500px) and (max-width: 1000px) {
-
   .Travel {
     padding: 0 100px;
   }
 }
 
 @media only screen and (min-width: 200px) and (max-width: 499px) {
-
   .Travel {
     padding: 0 24px;
     margin-top: 0;
     gap: 30px;
   }
 
-  .travel-list-btn {
+  .Add {
     margin: 0;
     padding: 0;
   }
 
   .Travel-MobileHeader {
-    display:inline;
+    display: inline;
   }
 
-  .travel-list-button-img {
+  .Add__img {
     display: inline;
     width: 50px;
     position: fixed;
@@ -65,12 +58,11 @@
     z-index: 1000;
   }
 
-  .travel-list-button-img:hover {
+  .Add__img:hover {
     opacity: 0.7;
   }
 
   .travel-list-button {
     display: none;
   }
-
 }

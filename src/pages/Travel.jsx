@@ -18,18 +18,14 @@ const Travel = ({ courses }) => {
     <>
       <Header />
       <div className="Travel">
-        <div className="travel-list-btn">
+        <div className="Add">
           {/* 새 여행 코스 추가 버튼 */}
           {/* <Button
             className="travel-list-button"
             onClick={goToNewPage}
             text={"+ 새 여행 코스 추가"}
           /> */}
-          <img
-            src={add}
-            className="travel-list-button-img"
-            onClick={goToNewPage}
-          />
+          <img src={add} className="Add__img" onClick={goToNewPage} />
         </div>
         <TravelList courses={courses} />
       </div>

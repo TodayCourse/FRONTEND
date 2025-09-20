@@ -6,6 +6,10 @@ h3 {
 
 .TravelList {
   display: flex;
+  max-width: 1330px;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .TravelList-main {
