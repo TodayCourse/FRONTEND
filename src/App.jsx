@@ -1,7 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, createContext, useEffect } from "react";
-import axios from "axios";
 
 import Home from "./pages/Home";
 import SiteInfo from "./pages/SiteInfo";
@@ -20,16 +19,20 @@ const CourseStateContext = createContext();
 const CourseDispatchContext = createContext();
 
 function App() {
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
   // courses 상태를 App.js에서 관리
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/travel");
-        setCourses(response.data);
+        const response = await fetch(`${API_BASE_URL}/api/travel`);
+        if (!response.ok) throw new Error("데이터 로딩 실패");
+        const data = await response.json(); // 👈 이거 꼭 필요!
+        setCourses(data); // 서버에서 배열을 주는 게 맞다면 여기서 배열 들어옴
       } catch (error) {
         console.error("데이터 로딩 오류:", error);
+        setCourses([]); // 실패 시 최소한 배열로 초기화
       }
     };
     fetchCourses();
@@ -37,7 +40,7 @@ function App() {
 
   const addPost = async (newPost) => {
     try {
-      const response = await fetch("http://localhost:8080/api/travel/create", {
+      const response = await fetch(`${API_BASE_URL}/api/travel/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newPost),
@@ -52,14 +55,11 @@ function App() {
 
   const updatePost = async (travelId, updatedPost) => {
     try {
-      const response = await fetch(
-        `http://localhost:8080/api/travel/${travelId}`,
-        {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(updatedPost),
-        }
-      );
+      const response = await fetch(`${API_BASE_URL}/api/travel/${travelId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedPost),
+      });
       const result = await response.json();
 
       if (response.ok) {
@@ -84,54 +84,6 @@ function App() {
     setCourses((prev) => prev.filter((course) => course.travelId !== travelId));
   };
 
-  const CourseaddPost = async (travelId, courseNewPost) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/api/travel/${travelId}/courses`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(courseNewPost),
-        }
-      );
-      if (!response.ok) throw new Error("코스 저장 실패!");
-      const coursesavedPost = await response.json();
-      setCourses((prev) => [...prev, coursesavedPost]);
-    } catch (error) {
-      console.error("게시글 저장 오류:", error);
-    }
-  };
-
-  const CourseUpdatePost = async (travelId, CourseUpdatedPost) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/api/travel/${travelId}/courses`,
-        {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(CourseUpdatedPost),
-        }
-      );
-      const result = await response.json();
-
-      if (response.ok) {
-        alert("수정이 완료되었습니다!");
-
-        setCourses((prev) =>
-          prev.map((course) =>
-            course.travelId === travelId
-              ? { ...course, ...CourseUpdatedPost }
-              : course
-          )
-        );
-      } else {
-        alert(`수정에 실패했습니다: ${result.message}`);
-      }
-    } catch (error) {
-      alert("오류 발생: " + error.message);
-    }
-  };
-
   return (
     <>
       <CourseStateContext.Provider value={courses}>
@@ -151,9 +103,7 @@ function App() {
             />
             <Route
               path="/travelregister"
-              element={
-                <TravelRegister addPost={addPost} onSave={CourseaddPost} />
-              }
+              element={<TravelRegister addPost={addPost} />}
             />
 
             <Route

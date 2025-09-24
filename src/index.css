@@ -2,24 +2,29 @@
   --main-color: #5463ff;
   --main-color-10: rgba(84, 99, 255, 0.1);
   --main-color-20: rgba(84, 99, 255, 0.2);
-  --main-color-90: rgb(0,17,61);
+  --main-color-90: rgb(0, 17, 61);
 
-  --gray-color-10: #F2F3F7;
-  --gray-color-20: #EBEBEB;
-  --gray-color-30: #E5E8EB;
-  --gray-color-40: #A8A8AA;
+  --gray-color-10: #f2f3f7;
+  --gray-color-20: #ebebeb;
+  --gray-color-30: #e5e8eb;
+  --gray-color-40: #a8a8aa;
   --gray-color-50: #999999;
-  --gray-color-80: #777C89;
-  --gray-color-90: #4E5968;
+  --gray-color-80: #777c89;
+  --gray-color-90: #4e5968;
 
-  --red-color: #FF4242;
+  --red-color: #ff4242;
   --red-color-10: rgba(255, 66, 66, 0.1);
-
 }
 
 @font-face {
-  font-family: 'S-CoreDream-3Light';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+  font-family: "S-CoreDream-3Light";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
+}
+
+html,
+body {
+  letter-spacing: -1px;
 }
